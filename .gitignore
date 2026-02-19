@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+temp.csv
+.DS_Store
