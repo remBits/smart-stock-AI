@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Smartstock IA • Command Center</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glow-bg"></div>
+
+    <nav class="sidebar">
+        <div class="logo">Smartstock <span>IA</span></div>
+        <div class="nav-links">
+            <div class="nav-item active" onclick="switchTab('dashboard-view', this)">📊 Panel</div>
+            <div class="nav-item" onclick="switchTab('inventory-view', this)">📦 SKUs</div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div id="dashboard-view" class="tab-content">
+            <header class="top-header">
+                <div class="header-text">
+                    <h1>Command Center <span class="live-tag">LIVE</span></h1>
+                    <p>Optimización predictiva para inventarios</p>
+                </div>
+                <div class="actions">
+                    <input type="file" id="csvFile" accept=".csv" hidden>
+                    <button class="btn-upload" onclick="document.getElementById('csvFile').click()">📂 Cargar CSV</button>
+                    <button id="btnProcess" class="btn-execute" onclick="processData()">EJECUTAR IA</button>
+                </div>
+            </header>
+
+            <div id="system-msg" class="system-msg"></div>
+
+            <section id="macro-dashboard" class="macro-panel hidden">
+                <div class="macro-grid">
+                    <div class="macro-card">
+                        <h3>Riesgo Promedio</h3>
+                        <p id="kpi-risk">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Capital Inmovilizado</h3>
+                        <p id="kpi-capital">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>SKU Críticos</h3>
+                        <p id="kpi-critical">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Demanda Total</h3>
+                        <p id="kpi-demand">--</p>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="macroChart"></canvas>
+                </div>
+            </section>
+
+            <section id="results-area" class="hidden">
+                <div class="kpi-grid">
+                    <div class="kpi-card highlight">
+                        <span class="label">Nivel de Riesgo</span>
+                        <h2 id="v-risk">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Compra Sugerida</span>
+                        <h2 id="v-order">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Capital</span>
+                        <h2 id="v-save">--</h2>
+                    </div>
+                </div>
+
+                <div class="mid-section">
+                    <div class="chart-box">
+                        <div class="box-header"><h3>Pronóstico Semanal</h3></div>
+                        <div style="height:300px;"><canvas id="mainChart"></canvas></div>
+                    </div>
+                    <div class="insight-box">
+                        <div class="box-header"><h3>Detalle Operativo</h3></div>
+                        <div id="insight-text" class="insight-content"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="inventory-view" class="tab-content hidden">
+            <header class="top-header"><h1>Reporte de SKUs</h1></header>
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr><th>SKU</th><th>Categoría</th><th>ROP</th><th>Stock</th><th>Riesgo</th></tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
