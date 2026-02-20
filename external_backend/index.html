@@ -12,13 +12,15 @@
     <div class="glow-bg"></div>
 
     <nav class="sidebar">
-        <div class="logo">Smartstock <span>IA</span></div>
+        <div class="logo">SmartStock <span>IA</span></div>
         <div class="nav-links">
             <div class="nav-item active" onclick="switchTab('dashboard-view', this)">📊 Panel</div>
             <div class="nav-item" onclick="switchTab('inventory-view', this)">📦 SKUs</div>
-            <div class="nav-item" onclick="toggleAccessibility()" style="border-top: 1px solid var(--border); margin-top: 20px;">
+            <div class="nav-item" onclick="toggleAccessibility()" style="border-top: 1px solid var(--border); margin-top: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;">
                 ⭐️ Modo Accesible
             </div>
+            <div class="nav-item" onclick="switchTab('ethics-view', this)">⚖️ Ética y Accesibilidad</div>
+            <div class="nav-item" onclick="switchTab('about-view', this)">👥 Sobre Nosotros</div>
         </div>
     </nav>
 
@@ -124,6 +126,113 @@
                 </table>
             </div>
         </div>
+        
+        <div id="ethics-view" class="tab-content hidden">
+            <div class="executive-box ethics-content">
+                <h1><strong>SmartStock AI - Código de Ética y Accesibilidad</strong></h1>
+                
+                <h2>🧱 1. Código de Ética</h2>
+                <p>SmartStock AI se compromete a desarrollar y operar tecnología de inteligencia artificial con responsabilidad, transparencia y respeto hacia las Pymes y sus comunidades. Nuestro código de ética se basa en cinco principios:</p>
+                
+                <ol>
+                    <li><strong>Transparencia en el uso de datos</strong>
+                        <ul>
+                            <li>Explicamos claramente qué datos se usan y para qué.</li>
+                            <li>No recolectamos información innecesaria.</li>
+                            <li>El usuario siempre mantiene el control de sus datos.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Privacidad y protección de la información</strong>
+                        <ul>
+                            <li>Los datos de ventas y stock se procesan de forma segura.</li>
+                            <li>No compartimos información con terceros sin consentimiento.</li>
+                            <li>Aplicamos buenas prácticas de seguridad para evitar filtraciones.</li>
+                        </ul>
+                    </li>
+                    <li><strong>IA responsable y explicable</strong>
+                        <ul>
+                            <li>Justificación clara en recomendaciones (demanda, riesgo, nivel óptimo).</li>
+                            <li>Evitamos modelos “caja negra” en decisiones críticas.</li>
+                            <li>El usuario puede revisar y corregir las recomendaciones.</li>
+                        </ul>
+                    </li>
+                    <li><strong>No discriminación y equidad</strong>
+                        <ul>
+                            <li>Sin favoritismos por proveedores, marcas o productos.</li>
+                            <li>Decisiones basadas únicamente en datos objetivos.</li>
+                            <li>Evitamos sesgos que perjudiquen a negocios pequeños.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Sostenibilidad y eficiencia</strong>
+                        <ul>
+                            <li>Reducción de desperdicios mediante inventarios eficientes.</li>
+                            <li>Optimización de capital y recursos para Pymes.</li>
+                            <li>Fomento de prácticas responsables en la cadena de suministro.</li>
+                        </ul>
+                    </li>
+                </ol>
+            
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+            
+                <h2>♿ 2. Accesibilidad</h2>
+                <p>Diseñado para todo tipo de usuarios, independientemente de sus capacidades o limitaciones tecnológicas.</p>
+                
+                <ol>
+                    <li><strong>Interfaz simple y clara</strong>
+                        <ul>
+                            <li>Dashboard intuitivo y lenguaje sin tecnicismos.</li>
+                            <li>Recomendaciones directas y accionables.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Compatibilidad técnica</strong>
+                        <ul>
+                            <li>Funciona en navegadores estándar y hardware básico.</li>
+                            <li>Optimizado para conexiones inestables.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Inclusión y Discapacidad</strong>
+                        <ul>
+                            <li>Alto contraste para baja visión y soporte para lectores de pantalla.</li>
+                            <li>Botones grandes y etiquetas descriptivas.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Inclusión digital</strong>
+                        <ul>
+                            <li>Carga vía CSV simple para Pymes sin sistemas complejos (ERP).</li>
+                            <li>Guías paso a paso integradas.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div> 
+        </div>
+
+        <div id="about-view" class="tab-content hidden">
+            <h2>👥 Sobre Nosotros</h2>
+            <div class="executive-box">
+                <h1><strong>Sobre SmartStock IA</strong></h1>
+                
+                <p>Cada día, una Pyme pierde ventas sin notarlo. SmartStock IA nace para cerrar esa brecha, transformando datos históricos en decisiones estratégicas de reposición. No somos solo una herramienta de análisis; somos el motor de acción para el comercio local.</p>
+            
+                <h3>🎯 Nuestra Propuesta</h3>
+                <p>Convertimos la complejidad de la ciencia de datos en recomendaciones claras: <strong>cuándo y cuánto reponer</strong>. A través de modelos avanzados como <em>Prophet</em> y cálculos de optimización de stock, ayudamos a:</p>
+                <ul>
+                    <li><strong>Reducir quiebres:</strong> No pierdas más ventas por falta de producto.</li>
+                    <li><strong>Eliminar inventario muerto:</strong> Libera capital inmovilizado en artículos que no rotan.</li>
+                    <li><strong>Mejorar el flujo de caja:</strong> Compra solo lo que realmente vas a vender.</li>
+                </ul>
+            
+                <h3>💡 Tecnología con Propósito</h3>
+                <p>Sabemos que muchas Pymes no cuentan con sistemas ERP complejos. Por eso, diseñamos una interfaz <strong>accesible, simple y humana</strong>. Nuestra prioridad es eliminar las barreras tecnológicas para que cualquier emprendedor, sin importar su nivel de alfabetización digital, pueda competir en igualdad de condiciones.</p>
+            
+                <h3>🚀 El Futuro</h3>
+                <p>Estamos construyendo el centro de comando definitivo para el retail independiente. Proyectamos integrar alertas automáticas, simuladores de ahorro en tiempo real y conexiones directas para que la gestión inteligente esté al alcance de un solo clic.</p>
+                
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
+                    "SmartStock IA: Convierte tus datos en decisiones."
+                </p>
+            </div>
+        </div>
+
     </main>
 
     <script src="/static/script.js"></script>

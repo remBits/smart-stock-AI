@@ -230,27 +230,58 @@ h2 {
 /* ===============================
    MODO ACCESIBLE
 ================================= */
-
+/* 1. General */
 body.accessible-mode {
     --bg: #ffffff;
-    --card: #f8f9fa;
-    --text-dim: #333333;
-    --accent: #0056b3; /* Azul oscuro para mejor contraste sobre blanco */
-    --border: #cccccc;
-    color: #000000;
-    font-family: 'Lexend', sans-serif;
-    line-height: 1.8; /* Más espacio para dislexia */
+    --card: #f0f0f0; /* Un gris muy claro para diferenciar tarjetas */
+    --text-dim: #000000;
+    --accent: #0056b3; 
+    --border: #000000;
+    background: #ffffff !important; /* Se quita el degradado */
 }
 
-body.accessible-mode .nav-item, 
-body.accessible-mode h1, 
-body.accessible-mode h2 {
-    color: #000 !important;
+/* 2. Quitar el degradado del fondo */
+body.accessible-mode .glow-bg {
+    display: none !important;
 }
 
-body.accessible-mode .btn-execute {
-    background: #000;
-    color: #fff;
+/* 3. Asegurar que TODO el texto sea negro (incluyendo párrafos y sidebar) */
+body.accessible-mode, 
+body.accessible-mode p, 
+body.accessible-mode div, 
+body.accessible-mode span,
+body.accessible-mode .nav-item,
+body.accessible-mode .insight-content,
+body.accessible-mode .executive-box {
+    color: #000000 !important;
+}
+
+/* 4. Corregir la Sidebar (Letras blancas sobre fondo negro de la barra) */
+body.accessible-mode .sidebar {
+    background: #000000; /* Fondo negro sólido para máximo contraste */
+}
+
+body.accessible-mode .nav-item {
+    color: #ffffff !important; /* Letras blancas para que se vean en la barra negra */
+    border-bottom: 1px solid #333;
+}
+
+body.accessible-mode .nav-item.active {
+    background: #ffff00; /* Amarillo brillante para el ítem activo (estilo alta visibilidad) */
+    color: #000000 !important;
+}
+
+/* 5. Resaltar los <strong> en azul oscuro para que se lean bien */
+body.accessible-mode strong {
+    color: #0056b3 !important;
+}
+
+/* 6. Disclaimer y mensajes de sistema */
+/* En modo accesible se hacen más visibles */
+body.accessible-mode .ia-disclaimer,
+body.accessible-mode .system-msg {
+    color: #000000 !important;
+    font-weight: bold;
 }
 
 
@@ -266,10 +297,23 @@ body.accessible-mode .btn-execute {
     opacity: 0.8;
 }
 
-/* En modo accesible se hace más visible */
-body.accessible-mode .ia-disclaimer {
+
+/* =====================================
+   DECLARACIÓN DE ÉTICA Y ACCESIBILIDAD
+======================================== */
+.ethics-content ul {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: var(--text-dim);
     font-size: 0.9rem;
-    color: #000;
-    opacity: 1;
-    font-weight: bold;
+}
+
+.ethics-content li {
+    margin-bottom: 8px;
+}
+
+/* Modo accesible: se asegura que las listas sean bien legibles. */
+body.accessible-mode .ethics-content ul {
+    color: #000 !important;
+    font-size: 1rem;
 }
