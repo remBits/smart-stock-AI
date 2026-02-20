@@ -19,6 +19,7 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .glow-bg {
@@ -227,6 +228,10 @@ h2 {
     font-size: 1.1rem;
 }
 
+.welcome-content strong {
+    color: var(--accent);
+}
+
 /* ===============================
    MODO ACCESIBLE
 ================================= */
@@ -238,6 +243,7 @@ body.accessible-mode {
     --accent: #0056b3; 
     --border: #000000;
     background: #ffffff !important; /* Se quita el degradado */
+    transition: all 0.3s ease; /* Transición más suave */
 }
 
 /* 2. Botones */
