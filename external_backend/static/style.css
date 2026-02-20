@@ -165,7 +165,7 @@ table tbody td {
     font-size: 0.9rem;
 }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 /* ===============================
    RESUMEN EJECUTIVO
