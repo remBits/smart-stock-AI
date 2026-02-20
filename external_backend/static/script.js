@@ -122,10 +122,10 @@ function generateExecutiveSummary(data) {
     const topRiskItem = data.reduce((max, item) => item.risk > max.risk ? item : max, data[0]);
 
     return `
-    El riesgo promedio del inventario es de ${avgRisk}%, con ${critical} productos en estado crítico y ${medium} en riesgo medio.
-    El sistema proyecta la demanda semanal y calcula puntos de reposición para recomendar cuándo y cuánto reordenar cada producto.
-    El capital potencialmente optimizable asciende a $${totalSavings.toLocaleString('es-CL')}.
-    🔴 Producto más crítico actual: <strong>${topRiskItem.sku}</strong> - ${topRiskItem.risk}% de riesgo.
+    <p>El riesgo promedio del inventario es de <strong>${avgRisk}%</strong>, con <strong>${critical}</strong> productos en estado crítico y ${medium} en riesgo medio.</p>
+    <p>El sistema proyecta la demanda semanal y calcula puntos de reposición para recomendar cuándo y cuánto reordenar cada producto.</p>
+    <p>El capital potencialmente optimizable asciende a <strong>$${totalSavings.toLocaleString('es-CL')}</strong>.</p>
+    <p>🔴 Producto más crítico actual: <strong>${topRiskItem.sku}</strong> - ${topRiskItem.risk}% de riesgo.</p>
     `;
 }
 
@@ -232,4 +232,15 @@ function renderMainChart(points, sku) {
             }
         }
     });
+}
+
+/**
+ * Modo accesible
+ */
+function toggleAccessibility() {
+    document.body.classList.toggle('accessible-mode');
+    
+    // Opcional: Guardar preferencia
+    const isActive = document.body.classList.contains('accessible-mode');
+    console.log("Modo accesible:", isActive);
 }

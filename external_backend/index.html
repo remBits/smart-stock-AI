@@ -16,6 +16,9 @@
         <div class="nav-links">
             <div class="nav-item active" onclick="switchTab('dashboard-view', this)">📊 Panel</div>
             <div class="nav-item" onclick="switchTab('inventory-view', this)">📦 SKUs</div>
+            <div class="nav-item" onclick="toggleAccessibility()" style="border-top: 1px solid var(--border); margin-top: 20px;">
+                ⭐️ Modo Accesible
+            </div>
         </div>
     </nav>
 
@@ -34,6 +37,10 @@
             </header>
         
             <div id="system-msg" class="system-msg"></div>
+
+            <p class="ia-disclaimer">
+                ⚠️ Smartstock IA es una herramienta de apoyo. Las decisiones finales de compra deben ser validadas por el equipo de operaciones.
+            </p>
 
             <div id="welcome-msg" class="welcome-container">
                 <div class="welcome-content">

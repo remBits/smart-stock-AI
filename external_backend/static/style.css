@@ -1,3 +1,6 @@
+/* Importar Lexend para accesibilidad (dislexia-friendly) */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap');
+
 :root {
     --bg: #020408;
     --card: rgba(13, 17, 23, 0.95);
@@ -198,7 +201,9 @@ h2 {
     letter-spacing: 0.5px;
 }
 
-/* Bloque de Bienvenida */
+/* ===============================
+   BLOQUE DE BIENVENIDA
+================================= */
 .welcome-container {
     display: flex;
     justify-content: center;
@@ -220,4 +225,51 @@ h2 {
 .welcome-content p {
     color: var(--text-dim);
     font-size: 1.1rem;
+}
+
+/* ===============================
+   MODO ACCESIBLE
+================================= */
+
+body.accessible-mode {
+    --bg: #ffffff;
+    --card: #f8f9fa;
+    --text-dim: #333333;
+    --accent: #0056b3; /* Azul oscuro para mejor contraste sobre blanco */
+    --border: #cccccc;
+    color: #000000;
+    font-family: 'Lexend', sans-serif;
+    line-height: 1.8; /* Más espacio para dislexia */
+}
+
+body.accessible-mode .nav-item, 
+body.accessible-mode h1, 
+body.accessible-mode h2 {
+    color: #000 !important;
+}
+
+body.accessible-mode .btn-execute {
+    background: #000;
+    color: #fff;
+}
+
+
+/* ===============================
+   DISCLAIMER DE RESPONSABILIDAD
+================================= */
+/* Disclaimer de uso común */
+.ia-disclaimer {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 10px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* En modo accesible se hace más visible */
+body.accessible-mode .ia-disclaimer {
+    font-size: 0.9rem;
+    color: #000;
+    opacity: 1;
+    font-weight: bold;
 }
