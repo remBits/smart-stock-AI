@@ -156,6 +156,7 @@ function populateInventoryTable(data) {
  * Renderizado de Chart.js
  */
 let chartInstance = null;
+
 function renderMainChart(points, sku) {
     const ctx = document.getElementById('mainChart').getContext('2d');
     
@@ -163,10 +164,12 @@ function renderMainChart(points, sku) {
         chartInstance.destroy();
     }
 
+    const labels = points.map((_, i) => `Día ${i + 1}`);
+
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            labels: labels,
             datasets: [{
                 label: `Demanda Predicha: ${sku}`,
                 data: points,
