@@ -100,12 +100,43 @@ function updateGlobalMetrics(data) {
     document.getElementById('kpi-capital').innerText = "$" + totalSavings.toLocaleString('es-CL');
     document.getElementById('kpi-critical').innerText = criticalCount;
     document.getElementById('kpi-demand').innerText = totalDemand + " SKUs";
+    document.getElementById('executive-summary').innerHTML = 
+    generateExecutiveSummary(data);
 }
+
+/**
+ * Genera el texto del Resumen Ejecutivo
+ */
+function generateExecutiveSummary(data) {
+
+    const totalRisk = data.reduce((acc, curr) => acc + curr.risk, 0);
+    const avgRisk = Math.round(totalRisk / data.length);
+
+    const critical = data.filter(item => item.risk > 75).length;
+    const medium = data.filter(item => item.risk > 40 && item.risk <= 75).length;
+
+    const totalSavings = data.reduce((acc, curr) => acc + curr.savings, 0);
+
+    // Producto más crítico
+    const topRiskItem = data.reduce((max, item) => item.risk > max.risk ? item : max, data[0]);
+
+    return `
+    El riesgo promedio del inventario es de ${avgRisk}%, con ${critical} productos en estado crítico y ${medium} en riesgo medio.
+    El sistema proyecta la demanda semanal y calcula puntos de reposición para recomendar cuándo y cuánto reordenar cada producto.
+    El capital potencialmente optimizable asciende a $${totalSavings.toLocaleString('es-CL')}.
+    🔴 Producto más crítico actual: <strong>${topRiskItem.sku}</strong> - ${topRiskItem.risk}% de riesgo.
+    `;
+}
+
 
 /**
  * Actualiza la sección de resultados individuales (Gráfico y KPIs)
  */
 function updateProductDetail(item) {
+    // Producto seleccionado
+    document.getElementById('product-title').innerText =
+    `${item.sku} - ${item.category}`;
+
     // IDs basados en tu HTML de Command Center
     document.getElementById('v-risk').innerText = item.risk + "%";
     document.getElementById('v-order').innerText = item.suggested_order;

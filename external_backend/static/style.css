@@ -166,3 +166,34 @@ table tbody td {
 }
 
 .hidden { display: none; }
+
+/* ===============================
+   RESUMEN EJECUTIVO
+================================= */
+
+.executive-box {
+    background: linear-gradient(145deg, rgba(0,242,255,0.05), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 12px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #dbe4ee;
+    box-shadow: 0 8px 30px rgba(0, 242, 255, 0.05);
+}
+
+.executive-box strong {
+    color: var(--accent);
+}
+
+h2 {
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-family: 'Orbitron';
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+}

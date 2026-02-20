@@ -35,6 +35,49 @@
 
             <div id="system-msg" class="system-msg"></div>
 
+
+
+            <h2>📊 Resumen Ejecutivo</h2>
+            <div id="executive-summary" class="executive-box"></div>
+
+            <h2>🔎 Resumen Técnico</h2>
+            <p>
+                Esta sección muestra el análisis detallado de un producto seleccionado.
+                Puede cambiar de producto desde la pestaña <strong>SKUs</strong> para explorar otros casos.
+            </p>
+
+            <section id="results-area" class="hidden">
+                <div class="kpi-grid">
+                    <div class="kpi-card highlight">
+                        <span class="label">Nivel de Riesgo</span>
+                        <h2 id="v-risk">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Compra Sugerida</span>
+                        <h2 id="v-order">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Capital</span>
+                        <h2 id="v-save">--</h2>
+                    </div>
+                </div>
+
+                <div class="mid-section">
+                    <div class="chart-box">
+                        <div class="box-header"><h3>Pronóstico Semanal</h3></div>
+                        <h3 id="product-title"></h3>
+                        <div style="height:300px;"><canvas id="mainChart"></canvas></div>
+                    </div>
+                    <div class="insight-box">
+                        <div class="box-header"><h3>Detalle Operativo</h3></div>
+                        <div id="insight-text" class="insight-content"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="inventory-view" class="tab-content hidden">
+            <header class="top-header"><h1>Reporte de SKUs</h1></header>
             <section id="macro-dashboard" class="macro-panel hidden">
                 <div class="macro-grid">
                     <div class="macro-card">
@@ -58,38 +101,6 @@
                     <canvas id="macroChart"></canvas>
                 </div>
             </section>
-
-            <section id="results-area" class="hidden">
-                <div class="kpi-grid">
-                    <div class="kpi-card highlight">
-                        <span class="label">Nivel de Riesgo</span>
-                        <h2 id="v-risk">--</h2>
-                    </div>
-                    <div class="kpi-card">
-                        <span class="label">Compra Sugerida</span>
-                        <h2 id="v-order">--</h2>
-                    </div>
-                    <div class="kpi-card">
-                        <span class="label">Capital</span>
-                        <h2 id="v-save">--</h2>
-                    </div>
-                </div>
-
-                <div class="mid-section">
-                    <div class="chart-box">
-                        <div class="box-header"><h3>Pronóstico Semanal</h3></div>
-                        <div style="height:300px;"><canvas id="mainChart"></canvas></div>
-                    </div>
-                    <div class="insight-box">
-                        <div class="box-header"><h3>Detalle Operativo</h3></div>
-                        <div id="insight-text" class="insight-content"></div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="inventory-view" class="tab-content hidden">
-            <header class="top-header"><h1>Reporte de SKUs</h1></header>
             <div class="table-section">
                 <table>
                     <thead>

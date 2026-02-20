@@ -317,7 +317,7 @@ async def predict(file: UploadFile = File(...)):
                 days_cover = round(stock / daily_demand, 1) if daily_demand > 0 else 0
                 interpretation = f"CRÍTICO: Stock podría agotarse en ~{days_cover} días. Revisa reposición urgente."
             elif stock < rop:
-                interpretation = f"REABASTECER: Nivel debajo del punto de reorden (ROP ≈ {int(rop)} unidades)."
+                interpretation = f"REABASTECER PRONTO: Nivel debajo del punto de reorden (ROP ≈ {int(rop)} unidades)."
             else:
                 interpretation = "ÓPTIMO: Inventario bajo control según la demanda estimada."
 
