@@ -6,3 +6,4 @@ scipy
 prophet
 scikit-learn
 matplotlib
+python-multipart
