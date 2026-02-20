@@ -240,12 +240,35 @@ body.accessible-mode {
     background: #ffffff !important; /* Se quita el degradado */
 }
 
-/* 2. Quitar el degradado del fondo */
+/* 2. Botones */
+/* Subida */
+body.accessible-mode .btn-upload {
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    font-weight: bold;
+}
+
+/* Ejecutar IA */
+body.accessible-mode .btn-execute {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* 3. Gráficos */
+body.accessible-mode .chart-box {
+    border: 2px solid #000000 !important;
+}
+
+body.accessible-mode #product-title {
+    color: #000000 !important;
+}
+
+/* 4. Quitar el degradado del fondo */
 body.accessible-mode .glow-bg {
     display: none !important;
 }
 
-/* 3. Asegurar que TODO el texto sea negro (incluyendo párrafos y sidebar) */
+/* 5. Asegurar que TODO el texto sea negro (incluyendo párrafos y sidebar) */
 body.accessible-mode, 
 body.accessible-mode p, 
 body.accessible-mode div, 
@@ -256,7 +279,7 @@ body.accessible-mode .executive-box {
     color: #000000 !important;
 }
 
-/* 4. Corregir la Sidebar (Letras blancas sobre fondo negro de la barra) */
+/* 6. Corregir la Sidebar (Letras blancas sobre fondo negro de la barra) */
 body.accessible-mode .sidebar {
     background: #000000; /* Fondo negro sólido para máximo contraste */
 }
@@ -271,12 +294,12 @@ body.accessible-mode .nav-item.active {
     color: #000000 !important;
 }
 
-/* 5. Resaltar los <strong> en azul oscuro para que se lean bien */
+/* 7. Resaltar los <strong> en azul oscuro para que se lean bien */
 body.accessible-mode strong {
     color: #0056b3 !important;
 }
 
-/* 6. Disclaimer y mensajes de sistema */
+/* 8. Disclaimer y mensajes de sistema */
 /* En modo accesible se hacen más visibles */
 body.accessible-mode .ia-disclaimer,
 body.accessible-mode .system-msg {
