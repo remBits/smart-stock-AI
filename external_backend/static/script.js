@@ -61,7 +61,8 @@ async function processData() {
 
         const data = await response.json();
 
-        // Revelar secciones del Dashboard
+        // Revelar secciones del Dashboard y ocultar mensaje de bienvenida
+        document.getElementById('welcome-msg').classList.add('hidden');
         document.getElementById('macro-dashboard').classList.remove('hidden');
         document.getElementById('results-area').classList.remove('hidden');
 

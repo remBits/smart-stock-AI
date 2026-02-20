@@ -32,21 +32,28 @@
                     <button id="btnProcess" class="btn-execute" onclick="processData()">EJECUTAR IA</button>
                 </div>
             </header>
-
+        
             <div id="system-msg" class="system-msg"></div>
 
-
-
-            <h2>📊 Resumen Ejecutivo</h2>
-            <div id="executive-summary" class="executive-box"></div>
-
-            <h2>🔎 Resumen Técnico</h2>
-            <p>
-                Esta sección muestra el análisis detallado de un producto seleccionado.
-                Puede cambiar de producto desde la pestaña <strong>SKUs</strong> para explorar otros casos.
-            </p>
-
+            <div id="welcome-msg" class="welcome-container">
+                <div class="welcome-content">
+                    <span class="pulse-icon">📡</span>
+                    <h2>Sistema en espera de datos</h2>
+                    <p>Para comenzar el análisis predictivo, por favor carga un archivo <strong>.csv</strong> y presiona <strong>EJECUTAR IA</strong>.</p>
+                </div>
+            </div>
+        
             <section id="results-area" class="hidden">
+                
+                <h2>📊 Resumen Ejecutivo</h2>
+                <div id="executive-summary" class="executive-box"></div>
+        
+                <h2>🔎 Resumen Técnico</h2>
+                <p>
+                    Esta sección muestra el análisis detallado de un producto seleccionado.
+                    Puede cambiar de producto desde la pestaña <strong>SKUs</strong> para explorar otros casos.
+                </p>
+        
                 <div class="kpi-grid">
                     <div class="kpi-card highlight">
                         <span class="label">Nivel de Riesgo</span>
@@ -61,7 +68,7 @@
                         <h2 id="v-save">--</h2>
                     </div>
                 </div>
-
+        
                 <div class="mid-section">
                     <div class="chart-box">
                         <div class="box-header"><h3>Pronóstico Semanal</h3></div>
