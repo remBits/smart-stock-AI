@@ -57,8 +57,17 @@ async function processData() {
             body: formData
         });
 
-        if (!response.ok) throw new Error("Fallo en la respuesta del servidor.");
-
+        // Manejo inteligente de respuestas
+        if (response.status === 422) {
+            const errorData = await response.json();
+            handleColumnMappingError(errorData);
+            return;
+        }
+        
+        if (!response.ok) {
+            throw new Error("Fallo en la respuesta del servidor.");
+        }
+        
         const data = await response.json();
 
         // Revelar secciones del Dashboard y ocultar mensaje de bienvenida
@@ -83,6 +92,38 @@ async function processData() {
         console.error("Error:", error);
         msgBox.innerText = "ERROR CRÍTICO: " + error.message;
     }
+}
+
+/**
+ * Modo asistente
+ */
+
+function handleColumnMappingError(errorData) {
+    const msgBox = document.getElementById('system-msg');
+    msgBox.style.display = "block";
+
+    // FUNCIÓN FUTURA: cuando exista integración LLM
+    if (errorData.details?.type === "llm_suggestion") {
+        msgBox.innerText = "🤖 " + errorData.details.message;
+        return;
+    }
+
+    const missing = errorData.details?.missing || [];
+
+    let message = "🤖 SmartStock AI detectó un problema en tu archivo.\n\n";
+    
+    if (missing.length > 0) {
+        message += "Faltan las siguientes columnas obligatorias:\n";
+        missing.forEach(col => {
+            message += "• " + col + "\n";
+        });
+    } else {
+        message += "No se pudieron detectar columnas válidas.";
+    }
+
+    message += "\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
+
+    msgBox.innerText = message;
 }
 
 /**
