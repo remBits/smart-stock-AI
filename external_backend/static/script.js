@@ -102,6 +102,13 @@ function handleColumnMappingError(errorData) {
     const msgBox = document.getElementById('system-msg');
     msgBox.style.display = "block";
 
+    // Ocultar dashboards previos
+    document.getElementById('macro-dashboard')?.classList.add('hidden');
+    document.getElementById('results-area')?.classList.add('hidden');
+
+    // Volver a mostrar mensaje de bienvenida
+    document.getElementById('welcome-msg')?.classList.remove('hidden');
+
     // FUNCIÓN FUTURA: cuando exista integración LLM
     if (errorData.details?.type === "llm_suggestion") {
         msgBox.innerText = "🤖 " + errorData.details.message;
