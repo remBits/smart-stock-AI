@@ -98,6 +98,33 @@ async function processData() {
  * Modo asistente
  */
 
+// Reseteo de Dashboard para optimización de experiencia
+function resetDashboardState() {
+    // Limpiar tabla SKUs
+    const tbody = document.getElementById('table-body');
+    if (tbody) tbody.innerHTML = '';
+
+    // Limpiar gráfico si existe
+    if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+
+    // Limpiar detalle producto
+    const productTitle = document.getElementById('product-title');
+    if (productTitle) productTitle.innerText = '';
+
+    const insightText = document.getElementById('insight-text');
+    if (insightText) insightText.innerText = '';
+
+    // Reset KPIs visibles (opcional pero elegante)
+    const kpis = ['kpi-risk', 'kpi-capital', 'kpi-critical', 'kpi-demand'];
+    kpis.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = '-';
+    });
+}
+
 function handleColumnMappingError(errorData) {
     const msgBox = document.getElementById('system-msg');
     msgBox.style.display = "block";
@@ -105,6 +132,9 @@ function handleColumnMappingError(errorData) {
     // Ocultar dashboards previos
     document.getElementById('macro-dashboard')?.classList.add('hidden');
     document.getElementById('results-area')?.classList.add('hidden');
+
+    // Reset completo del estado visual
+    resetDashboardState();
 
     // Volver a mostrar mensaje de bienvenida
     document.getElementById('welcome-msg')?.classList.remove('hidden');
