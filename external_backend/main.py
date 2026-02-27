@@ -13,6 +13,9 @@ import logging
 from typing import List, Tuple
 from scipy.stats import norm
 
+from difflib import SequenceMatcher
+import unicodedata
+
 # --- Instalación librería ML: Prophet ---
 from prophet import Prophet
 
@@ -100,6 +103,60 @@ def require_columns_or_error(df: pd.DataFrame, required: List[str]) -> Tuple[boo
 
     return True, ""
 
+
+def normalize_string(s: str) -> str:
+    s = s.lower().strip()
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("utf-8")
+    s = s.replace(" ", "").replace("_", "")
+    return s
+
+
+def intelligent_column_mapping(df: pd.DataFrame, required: List[str], threshold: float = 0.65):
+    # PRÓXIMAMENTE: Integrar un fallback de mapeo semántico basado en un LLM en la función de aquí
+    # Por ej: enviar lista de columnas + esquema requerido a LLM para inferencia contextual
+    df = df.copy()
+
+    normalized_cols = {
+        col: normalize_string(col)
+        for col in df.columns
+    }
+
+    missing = [c for c in required if c not in df.columns]
+
+    suggestions = {}
+
+    for req in missing:
+        req_norm = normalize_string(req)
+
+        matches = []
+        for original, norm_col in normalized_cols.items():
+            similarity = SequenceMatcher(None, req_norm, norm_col).ratio()
+            if similarity >= threshold:
+                matches.append({
+                    "column": original,
+                    "similarity": round(similarity, 2)
+                })
+
+        if matches:
+            suggestions[req] = sorted(
+                matches,
+                key=lambda x: x["similarity"],
+                reverse=True
+            )
+
+    if suggestions:
+        return False, {
+            "type": "mapping_suggestions",
+            "missing": missing,
+            "suggestions": suggestions,
+            "llm_available": False  # PRÓXIMAMENTE: Activar cuando fallback LLM se implemente
+        }
+
+    return False, {
+        "type": "no_suggestions",
+        "missing": missing,
+        "llm_available": False
+    }
 
 # -----------------------------------------------------------------------------
 # PIPELINE DE PREDICCIÓN (MODO AVANZADO)
@@ -225,7 +282,15 @@ async def predict(file: UploadFile = File(...)):
     required = ["sku", "stock", "demand", "lead_time"]
     ok, msg = require_columns_or_error(df, required)
     if not ok:
-        raise HTTPException(status_code=400, detail=msg)
+        map_ok, mapping_info = intelligent_column_mapping(df, required)
+        
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": "column_mapping_required",
+                "details": mapping_info
+            }
+        )
 
     # 4. Conversión Numérica
     for col in ["stock", "demand", "lead_time", "unit_cost"]:
@@ -334,6 +399,7 @@ async def predict(file: UploadFile = File(...)):
                 "mode": mode,
                 "impact_level": impact,
                 "reorder_urgency": urgency,
+                "llm_available": False
             })
         except Exception as e_row:
             log.error(f"Error en fila {idx}: {e_row}")
