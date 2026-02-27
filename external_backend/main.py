@@ -88,22 +88,6 @@ def normalize_and_map_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def require_columns_or_error(df: pd.DataFrame, required: List[str]) -> Tuple[bool, any]:
-    """Verifica columnas. Si faltan, intenta asignar por posición."""
-    missing = [c for c in required if c not in df.columns]
-    if missing:
-        available_cols = list(df.columns)
-        for i, req_col in enumerate(required):
-            if req_col not in df.columns and i < len(available_cols):
-                df.rename(columns={available_cols[i]: req_col}, inplace=True)
-
-        still_missing = [c for c in required if c not in df.columns]
-        if still_missing:
-            return False, {"message": f"Faltan columnas: {', '.join(still_missing)}"}
-
-    return True, ""
-
-
 def normalize_string(s: str) -> str:
     s = s.lower().strip()
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("utf-8")
@@ -278,12 +262,11 @@ async def predict(file: UploadFile = File(...)):
     # 2. Normalización y Mapeo
     df = normalize_and_map_columns(df)
 
-    # 3. Verificación de columnas obligatorias (modo simple)
+    # 3. Verificación de columnas obligatorias
     required = ["sku", "stock", "demand", "lead_time"]
-    ok, msg = require_columns_or_error(df, required)
-    if not ok:
-        map_ok, mapping_info = intelligent_column_mapping(df, required)
-        
+    missing = [c for c in required if c not in df.columns]
+    if missing:
+        _, mapping_info = intelligent_column_mapping(df, required)
         return JSONResponse(
             status_code=422,
             content={
@@ -291,6 +274,7 @@ async def predict(file: UploadFile = File(...)):
                 "details": mapping_info
             }
         )
+
 
     # 4. Conversión Numérica
     for col in ["stock", "demand", "lead_time", "unit_cost"]:
