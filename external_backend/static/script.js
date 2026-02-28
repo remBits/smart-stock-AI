@@ -33,6 +33,14 @@ function switchTab(tabId, element) {
 }
 
 /**
+ * Función para mostrar chat en casos de código 422
+ */
+function showChat() {
+    const chat = document.getElementById("chat-container");
+    chat.classList.remove("hidden");
+}
+
+/**
  * Envía el archivo al servidor y procesa la respuesta
  */
 async function processData() {
@@ -61,6 +69,11 @@ async function processData() {
         if (response.status === 422) {
             const errorData = await response.json();
             handleColumnMappingError(errorData);
+
+            showChat();
+            addBotMessage(
+                `He detectado este problema: ${errorData.error}. ¿Quieres que lo revisemos juntos?`
+            );
             return;
         }
         
@@ -89,6 +102,7 @@ async function processData() {
         msgBox.innerText = "SISTEMA: ANÁLISIS DE RIESGO COMPLETADO EXITOSAMENTE.";
 
         // 4. Ocultar chat en los casos de éxito
+        document.getElementById("chat-container").classList.add("hidden");
         document.getElementById("chat-messages").innerHTML = "";
 
     } catch (error) {

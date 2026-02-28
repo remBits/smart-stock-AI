@@ -432,3 +432,45 @@ body.accessible-mode .ethics-content ul {
     display: flex;
     gap: 8px;
 }
+
+.chat-input-area input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.chat-input-area input::placeholder {
+    color: var(--text-dim);
+}
+
+.chat-input-area button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.chat-input-area button:hover {
+    opacity: 0.85;
+}
+
+/* Chatbot: modo accesible*/
+body.accessible-mode .chat-input-area input {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+}
+
+body.accessible-mode .chat-input-area button {
+    background: #000000;
+    color: #ffffff;
+}
