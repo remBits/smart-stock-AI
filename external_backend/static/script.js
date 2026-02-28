@@ -3,6 +3,10 @@
  * Gestión completa de Dashboard, KPIs y Visualización
  */
 
+/** 
+ * DOM E INICIALIZACIÓN
+*/
+
 // Inicialización al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Smartstock IA: Command Center Operativo");
@@ -32,9 +36,14 @@ function switchTab(tabId, element) {
     element.classList.add('active');
 }
 
+// Preparación para renderizado de Chart.js
+let chartInstance = null;
+
 /**
- * Función para mostrar chat en casos de código 422
+ * PREPARACIÓN FUNCIONES
  */
+
+// Función para mostrar chat en casos de código 422
 function showChat() {
     const chat = document.getElementById("chat-container");
     chat.classList.remove("hidden");
@@ -66,14 +75,10 @@ async function processData() {
         });
 
         // Manejo inteligente de respuestas
+
         if (response.status === 422) {
             const errorData = await response.json();
             handleColumnMappingError(errorData);
-
-            showChat();
-            addBotMessage(
-                `He detectado este problema: ${errorData.error}. ¿Quieres que lo revisemos juntos?`
-            );
             return;
         }
         
@@ -112,7 +117,7 @@ async function processData() {
 }
 
 /**
- * Modo asistente
+ * MODO ASISTENTE
  */
 
 // Chatbot para manejo de errores
@@ -127,6 +132,7 @@ function addChatMessage(text, sender = "bot") {
     message.innerText = text;
     container.appendChild(message);
 
+    // Scroll automático
     container.scrollTop = container.scrollHeight;
 }
 
@@ -164,6 +170,24 @@ function simulateBotResponse(userText) {
     }, 600);
 }
 
+// Guía de manejo de errores para el chatbot
+function generateErrorGuidance(errorMessage) {
+
+    if (errorMessage.includes("column_mapping_required")) {
+        return "Tu archivo no contiene todas las columnas obligatorias. Asegúrate de incluir: sku, stock, demand y lead time.";
+    }
+
+    if (errorMessage.includes("Invalid file format")) {
+        return "El archivo parece tener un formato inválido. Verifica que esté delimitado por comas y guardado como CSV UTF-8.";
+    }
+
+    if (errorMessage.includes("Empty file")) {
+        return "El archivo está vacío. Asegúrate de que contenga datos antes de subirlo.";
+    }
+
+    return "El sistema detectó un problema con el archivo. Revisa que cumpla con el formato esperado.";
+}
+
 // Reseteo de Dashboard para optimización de experiencia
 function resetDashboardState() {
     // Limpiar tabla SKUs
@@ -197,8 +221,9 @@ function resetDashboardState() {
 
 // Manejo de error 422
 function handleColumnMappingError(errorData) {
-    const msgBox = document.getElementById('system-msg');
-    msgBox.style.display = "block";
+
+    // Activar chat
+    showChat();
 
     // Ocultar dashboards previos
     document.getElementById('macro-dashboard')?.classList.add('hidden');
@@ -210,16 +235,16 @@ function handleColumnMappingError(errorData) {
     // Volver a mostrar mensaje de bienvenida
     document.getElementById('welcome-msg')?.classList.remove('hidden');
 
-    // FUNCIÓN FUTURA: cuando exista integración LLM
+    // FUNCIÓN FUTURA: 🧠 Preparación futura para integración LLM real
     if (errorData.details?.type === "llm_suggestion") {
-        msgBox.innerText = "🤖 " + errorData.details.message;
+        addChatMessage("🤖 " + errorData.details.message, "bot");
         return;
     }
 
     const missing = errorData.details?.missing || [];
 
-    let message = "🤖 SmartStock AI detectó un problema en tu archivo.\n\n";
-    
+    let message = "🤖 ¡Hola! SmartStock IA detectó un problema en tu archivo.\n\n";
+
     if (missing.length > 0) {
         message += "Faltan las siguientes columnas obligatorias:\n";
         missing.forEach(col => {
@@ -229,10 +254,13 @@ function handleColumnMappingError(errorData) {
         message += "No se pudieron detectar columnas válidas.";
     }
 
-    message += "\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
+    message += "\n\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
 
-    msgBox.style.display = "none";
     addChatMessage(message, "bot");
+
+    // Guidance inteligente adicional
+    const guidance = generateErrorGuidance(errorData.error || "");
+    addChatMessage(guidance, "bot");
 }
 
 
@@ -338,8 +366,6 @@ function populateInventoryTable(data) {
 /**
  * Renderizado de Chart.js
  */
-let chartInstance = null;
-
 function renderMainChart(points, sku) {
     const ctx = document.getElementById('mainChart').getContext('2d');
     
@@ -386,7 +412,7 @@ function renderMainChart(points, sku) {
 }
 
 /**
- * Modo accesible
+ * MODO ACCESIBLE
  */
 function toggleAccessibility() {
     document.body.classList.toggle('accessible-mode');
