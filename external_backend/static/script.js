@@ -88,6 +88,9 @@ async function processData() {
 
         msgBox.innerText = "SISTEMA: ANÁLISIS DE RIESGO COMPLETADO EXITOSAMENTE.";
 
+        // 4. Ocultar chat en los casos de éxito
+        document.getElementById("chat-messages").innerHTML = "";
+
     } catch (error) {
         console.error("Error:", error);
         msgBox.innerText = "ERROR CRÍTICO: " + error.message;
@@ -97,6 +100,55 @@ async function processData() {
 /**
  * Modo asistente
  */
+
+// Chatbot para manejo de errores
+// Conversación
+function addChatMessage(text, sender = "bot") {
+    const container = document.getElementById("chat-messages");
+    if (!container) return;
+
+    const message = document.createElement("div");
+    message.classList.add("chat-message", sender);
+
+    message.innerText = text;
+    container.appendChild(message);
+
+    container.scrollTop = container.scrollHeight;
+}
+
+// Input usuario
+function handleUserMessage() {
+    const input = document.getElementById("chat-input");
+    if (!input || !input.value.trim()) return;
+
+    const userText = input.value.trim();
+
+    addChatMessage(userText, "user");
+    input.value = "";
+
+    simulateBotResponse(userText);
+}
+
+// Simulación inteligente básica
+function simulateBotResponse(userText) {
+    let response = "No entendí tu solicitud. Puedes revisar el formato del CSV.";
+
+    if (userText.toLowerCase().includes("ejemplo")) {
+        response = "Un CSV válido debe contener columnas como: sku, stock, demand, lead_time.";
+    }
+
+    if (userText.toLowerCase().includes("mapear")) {
+        response = "Actualmente el mapeo automático no detectó coincidencias. ¿Deseas activar el módulo avanzado con IA?";
+    }
+
+    if (userText.toLowerCase().includes("activar")) {
+        response = "🔮 El módulo avanzado con LLM estará disponible próximamente.";
+    }
+
+    setTimeout(() => {
+        addChatMessage("🤖 " + response, "bot");
+    }, 600);
+}
 
 // Reseteo de Dashboard para optimización de experiencia
 function resetDashboardState() {
@@ -117,14 +169,19 @@ function resetDashboardState() {
     const insightText = document.getElementById('insight-text');
     if (insightText) insightText.innerText = '';
 
-    // Reset KPIs visibles (opcional pero elegante)
+    // Reset KPIs visibles
     const kpis = ['kpi-risk', 'kpi-capital', 'kpi-critical', 'kpi-demand'];
     kpis.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerText = '-';
     });
+
+    // Reset chat después de cada error
+    const chat = document.getElementById("chat-messages");
+    if (chat) chat.innerHTML = "";
 }
 
+// Manejo de error 422
 function handleColumnMappingError(errorData) {
     const msgBox = document.getElementById('system-msg');
     msgBox.style.display = "block";
@@ -160,8 +217,10 @@ function handleColumnMappingError(errorData) {
 
     message += "\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
 
-    msgBox.innerText = message;
+    msgBox.style.display = "none";
+    addChatMessage(message, "bot");
 }
+
 
 /**
  * Calcula y muestra métricas de toda la flota de SKUs
@@ -216,7 +275,7 @@ function updateProductDetail(item) {
     document.getElementById('product-title').innerText =
     `${item.sku} - ${item.category}`;
 
-    // IDs basados en tu HTML de Command Center
+    // IDs basados en el HTML del Command Center
     document.getElementById('v-risk').innerText = item.risk + "%";
     document.getElementById('v-order').innerText = item.suggested_order;
     document.getElementById('v-save').innerText = "$" + item.savings.toLocaleString('es-CL');
@@ -318,7 +377,7 @@ function renderMainChart(points, sku) {
 function toggleAccessibility() {
     document.body.classList.toggle('accessible-mode');
     
-    // Opcional: Guardar preferencia
+    // Guardar preferencia
     const isActive = document.body.classList.contains('accessible-mode');
     console.log("Modo accesible:", isActive);
 }

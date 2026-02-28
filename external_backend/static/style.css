@@ -1,6 +1,11 @@
 /* Importar Lexend para accesibilidad (dislexia-friendly) */
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap');
+/* Importar Orbitron para logo */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
+/* ===============================
+   MODO ESTÁNDAR
+================================= */
 :root {
     --bg: #020408;
     --card: rgba(13, 17, 23, 0.95);
@@ -18,7 +23,7 @@ body {
     margin: 0;
     display: flex;
     height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -51,6 +56,11 @@ body {
     color: var(--text-dim);
     cursor: pointer;
     border-left: 4px solid transparent;
+}
+
+.nav-item:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .nav-item.active {
@@ -92,11 +102,19 @@ body {
     font-weight: 600;
 }
 
+.btn-upload:focus,
+.btn-execute:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
 .btn-execute {
     background: var(--accent);
     color: #000;
     border: none;
     box-shadow: 0 6px 22px rgba(0,242,255,0.08);
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .system-msg { margin-top: 12px; font-family: 'Orbitron'; font-size: 0.85rem; }
@@ -244,6 +262,7 @@ body.accessible-mode {
     --border: #000000;
     background: #ffffff !important; /* Se quita el degradado */
     transition: all 0.3s ease; /* Transición más suave */
+    font-family: 'Lexend', system-ui, sans-serif; /* Uso de tipografía Lexend */
 }
 
 /* 2. Botones */
@@ -314,6 +333,31 @@ body.accessible-mode .system-msg {
 }
 
 
+/* 9. Chatbot */
+body.accessible-mode .chat-message.bot {
+    background: #e0e0e0;
+    color: #000000;
+}
+
+body.accessible-mode .chat-message.user {
+    background: #000000;
+    color: #ffffff;
+}
+
+#chat-messages:focus {
+    outline: 2px solid var(--accent);
+}
+
+.chat-message {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.chat-input-area input:focus {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
 /* ===============================
    DISCLAIMER DE RESPONSABILIDAD
 ================================= */
@@ -345,4 +389,46 @@ body.accessible-mode .system-msg {
 body.accessible-mode .ethics-content ul {
     color: #000 !important;
     font-size: 1rem;
+}
+
+
+/* =====================================
+   INTERFAZ DEL CHATBOT
+======================================== */
+.chat-box {
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 15px;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border-radius: 16px;
+    max-width: 75%;
+}
+
+.chat-message.bot {
+    background: #1f1f1f;
+    align-self: flex-start;
+}
+
+.chat-message.user {
+    background: #00f2fe;
+    color: black;
+    align-self: flex-end;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 8px;
 }

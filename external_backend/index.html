@@ -40,6 +40,17 @@
         
             <div id="system-msg" class="system-msg"></div>
 
+            <div id="chat-container" class="chat-box">
+                <div id="chat-messages"></div>
+            
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." />
+                    <button onclick="handleUserMessage()">Enviar</button>
+                </div>
+            </div>
+
+            <div id="chat-messages" tabindex="0" aria-live="polite"></div>
+
             <p class="ia-disclaimer">
                 ⚠️ Smartstock IA es una herramienta de apoyo. Las decisiones finales de compra deben ser validadas por el equipo de operaciones.
             </p>
