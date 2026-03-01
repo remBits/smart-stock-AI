@@ -236,7 +236,55 @@
         <div id="faq-view" class="tab-content hidden">
             <div class="executive-box">
                 <h1><strong>🤝 Preguntas Frecuentes (Frequently Asked Questions)</strong></h1>
-                <p>En construcción.</p>
+                <p>¡Bienvenido a la sección de Preguntas Frecuentes! Aquí recopilamos las dudas más comunes que puedan surgir con respecto a nuestra plataforma.</p>
+
+                <h2>🔷 Uso</h2>
+                <ul>
+                    <li><strong>¿Qué es SmartStock IA?</strong> SmartStock IA es un sistema de optimización de inventarios diseñado especialmente para Pymes. Permite transformar datos históricos en decisiones estratégicas de reposición de manera simple y accesible para todo tipo de usuario.</li>
+                    <li><strong>¿Cómo funciona?</strong> Solo debes presionar “Cargar CSV o Excel”, subir tu archivo y luego hacer clic en “Ejecutar IA”. Si el archivo presenta algún problema, el chatbot de ayuda se activará automáticamente para guiarte.</li>
+                    <li><strong>¿Qué hace el chatbot?</strong> Maneja problemas comunes con los archivos CSV de forma clara y amigable. Indica qué columnas faltan, cuáles presentan errores y brinda ejemplos prácticos para corregirlos.</li>
+                </ul>
+
+                <h2>🔷 Privacidad</h2>
+                <ul>
+                    <li><strong>¿Hay riesgo de fuga de información?</strong> Los archivos se procesan de forma temporal para generar la predicción y luego se descartan. SmartStock IA no almacena los archivos CSV o Excel de sus usuarios.</li>
+                    <li><strong>¿Y las predicciones se guardan?</strong> Actualmente, SmartStock IA tampoco guarda las predicciones. Se planea guardar el resultado general de una predicción a futuro y permitir que los usuarios registrados tengan acceso a esta funcionalidad.</li>
+                </ul>
+
+                <h2>🔷 Requisitos técnicos</h2>
+                <ul>
+                    <li><strong>¿Qué necesito para usar la aplicación?</strong> Solo un dispositivo capaz de conectarse a Internet y un navegador.</li>
+                    <li><strong>¿Por qué podrían haber problemas con el archivo?</strong> El modelo de IA utiliza los nombres de las columnas para identificar la información que necesita para predecir. Si no las identifica, no puede predecir. Es decir, el mapeo de columnas falla. Si el sistema no logra identificar correctamente las columnas necesarias, no podrá generar una predicción válida.</li>
+                    <li><strong>¿No manejaron esto antes?</strong> El sistema posee un diccionario de sinónimos como identificación o “mapeo” de columnas primario y una función inteligente para mapeo secundario. Si ambos fallan, aparece el error que activa el chatbot.</li>
+                    <li><strong>¿Qué otros nombres pueden tener las columnas?</strong> 
+                        <p>El mapeo primario contempla los siguientes sinónimos:</p>
+                        <ul>
+                            <li>SKU: sku_code, id, producto, item, product_id</li>
+                            <li>stock: inventario, cantidad, existencias, qty</li>
+                            <li>demand: demanda, consumo, ventas, sales</li>
+                            <li>lead_time: leadtime, entrega, plazo_entrega, lead_time_days</li>
+                            <li>unit_cost: precio, costo, unit_price, cost</li>
+                        </ul>
+                        <p>El mapeo es capaz de comprender el nombre de la columna incluso si las mayúsculas y minúsculas difieren, porque solo necesita que el texto sea igual. Si tanto el mapeo primario y secundario de columnas han fallado, se sugiere revisar el nombre de las columnas y, de ser posible, modificarlo a uno que sea parte de la lista para asegurar su correcta lectura por parte de la aplicación.</p>
+                    </li>
+                    <li><strong>¿Es necesario que tenga esas columnas?</strong> Sin esas columnas, el sistema no puede generar una predicción, pues la información es insuficiente. Las columnas obligatorias son: SKU, stock, demand, y lead_time. Además de esas 4 columnas obligatorias, el CSV puede incluir las columnas de fecha (o “date”) y unit_cost para mejorar la predicción obtenida.</li>
+                </ul>
+
+                <h2>🔷 Asistencia al usuario</h2>
+                <ul>
+                    <li><strong>¿Y si esta ayuda no me es suficiente?</strong> El chatbot contempla la adición de una conexión con un modelo LLM en la versión Pro para mejorar este problema. Esta funcionalidad no ha sido implementada aún.</li>
+                    <li><strong>¿Puedo obtener ayuda humana?</strong> Lamentablemente, por el momento la asistencia humana no está contemplada como función para el futuro.</li>
+                </ul>
+
+                <h2>🔷 Transparencia</h2>
+                <ul>
+                    <li><strong>¿Esto fue generado con IA?</strong> La plataforma fue desarrollada usando LLM ("IA"), sin embargo, todas las decisiones de inicio a fin son iniciadas, evaluadas, corregidas y aprobadas o denegadas por el equipo humano. SmartStock IA siempre ha mantenido y mantendrá a las personas como su motor principal.</li>
+                    <li><strong>¿Puedo ver cómo funciona el sistema?</strong> ¡Por supuesto! Para ello, visite nuestro repositorio.</li>
+                </ul>
+
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
+                    ¡Gracias por confiar en SmartStock IA!
+                </p>
             </div>
         </div>
         
