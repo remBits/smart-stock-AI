@@ -19,6 +19,8 @@
             <div class="nav-item" onclick="toggleAccessibility()" style="border-top: 1px solid var(--border); margin-top: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;">
                 ⭐️ Modo Accesible
             </div>
+            <div class="nav-item" onclick="switchTab('user-view', this)">🔐 Usuarios</div>
+            <div class="nav-item" onclick="switchTab('faq-view', this)">🤝 Preguntas Frecuentes (FAQ)</div>
             <div class="nav-item" onclick="switchTab('ethics-view', this)">⚖️ Ética y Accesibilidad</div>
             <div class="nav-item" onclick="switchTab('about-view', this)">👥 Sobre Nosotros</div>
         </div>
@@ -32,8 +34,8 @@
                     <p>Optimización predictiva para inventarios</p>
                 </div>
                 <div class="actions">
-                    <input type="file" id="csvFile" accept=".csv, .xlsx,.xls" hidden>
-                    <button class="btn-upload" onclick="document.getElementById('csvFile').click()">📂 Cargar CSV</button>
+                    <input type="file" id="csvFile" accept=".csv, .xlsx" hidden>
+                    <button class="btn-upload" onclick="document.getElementById('csvFile').click()">📂 Cargar CSV o Excel</button>
                     <button id="btnProcess" class="btn-execute" onclick="processData()">EJECUTAR IA</button>
                 </div>
             </header>
@@ -57,7 +59,7 @@
                 <div class="welcome-content">
                     <span class="pulse-icon">📡</span>
                     <h2>Sistema en espera de datos</h2>
-                    <p>Para comenzar el análisis predictivo, por favor carga un archivo <strong>.csv</strong> o <strong>Excel</strong> y presiona <strong>EJECUTAR IA</strong>.</p>
+                    <p>Para comenzar el análisis predictivo, por favor carga un archivo <strong>.csv</strong> o <strong>Excel (.xlsx)</strong> y presiona <strong>EJECUTAR IA</strong>.</p>
                     <p>Nota: Los datos se procesan en tiempo real y no se almacenan. Para su privacidad, evite subir columnas con datos personales.</p>
                 </div>
             </div>
@@ -134,6 +136,20 @@
                     </thead>
                     <tbody id="table-body"></tbody>
                 </table>
+            </div>
+        </div>
+
+        <div id="user-view" class="tab-content hidden">
+            <div class="executive-box">
+                <h1><strong>🔐 Registro o inicio de sesión de usuarios</strong></h1>
+                <p>En construcción.</p>
+            </div>
+        </div>
+
+        <div id="faq-view" class="tab-content hidden">
+            <div class="executive-box">
+                <h1><strong>🤝 Preguntas Frecuentes (Frequently Asked Questions)</strong></h1>
+                <p>En construcción.</p>
             </div>
         </div>
         

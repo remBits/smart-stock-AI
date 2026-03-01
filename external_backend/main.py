@@ -274,10 +274,10 @@ async def predict(file: UploadFile = File(...)):
     
     if filename.endswith(".csv"):
         df = try_read_csv_bytes(content)
-    elif filename.endswith(".xlsx") or filename.endswith(".xls"):
+    elif filename.endswith(".xlsx"):
         df = try_read_excel_bytes(content)
     else:
-        raise HTTPException(status_code=400, detail="Formato no soportado. Use CSV o Excel.")
+        raise HTTPException(status_code=400, detail="Formato no soportado. Use CSV o Excel (.xlsx).")
 
     # 2. Normalización y Mapeo
     df = normalize_and_map_columns(df)
