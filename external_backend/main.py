@@ -43,6 +43,7 @@ app.add_middleware(
 # HELPERS: Lectura de CSV y Procesamiento de Metadatos
 # -----------------------------------------------------------------------------
 
+# Lectura de CSV
 def try_read_csv_bytes(b: bytes) -> pd.DataFrame:
     """Intenta leer bytes de un archivo subido en un DataFrame con sniff de separadores."""
     encodings = ["utf-8", "latin1", "cp1252"]
@@ -70,7 +71,7 @@ def try_read_csv_bytes(b: bytes) -> pd.DataFrame:
 
     raise HTTPException(status_code=400, detail="No se pudo parsear el CSV.")
 
-
+# Normalización y mapeo de columnas primario
 def normalize_and_map_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Normaliza nombres y mapea alias comunes."""
     df = df.copy()
@@ -87,14 +88,14 @@ def normalize_and_map_columns(df: pd.DataFrame) -> pd.DataFrame:
     df.rename(columns=rename_map, inplace=True)
     return df
 
-
+# Normalización de strings
 def normalize_string(s: str) -> str:
     s = s.lower().strip()
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("utf-8")
     s = s.replace(" ", "").replace("_", "")
     return s
 
-
+# Mapeo inteligente de columnas (fallback del mapeo primario)
 def intelligent_column_mapping(df: pd.DataFrame, required: List[str], threshold: float = 0.65):
     # PRÓXIMAMENTE: Integrar un fallback de mapeo semántico basado en un LLM en la función de aquí
     # Por ej: enviar lista de columnas + esquema requerido a LLM para inferencia contextual
@@ -146,6 +147,7 @@ def intelligent_column_mapping(df: pd.DataFrame, required: List[str], threshold:
 # PIPELINE DE PREDICCIÓN (MODO AVANZADO)
 # -----------------------------------------------------------------------------
 
+# Función para detección de data temporal y construcción de series temporales
 def detect_time_series(df: pd.DataFrame) -> pd.DataFrame | None:
     """
     Detecta si el CSV tiene una columna de fecha y demanda para construir serie temporal.
@@ -177,7 +179,7 @@ def detect_time_series(df: pd.DataFrame) -> pd.DataFrame | None:
 
     return ts
 
-
+# Función de preprocesamiento
 def preprocess_ts(df_ts: pd.DataFrame) -> pd.DataFrame:
     """Preprocesamiento básico de la serie temporal."""
     df_ts = df_ts.copy()
@@ -190,7 +192,7 @@ def preprocess_ts(df_ts: pd.DataFrame) -> pd.DataFrame:
 
     return df_ts.reset_index()
 
-
+# Función para modelo Prophet
 def build_prophet_model() -> Prophet:
     """Modelo Prophet estándar para demanda de inventario."""
     m = Prophet(
@@ -204,7 +206,7 @@ def build_prophet_model() -> Prophet:
     m.add_seasonality(name="monthly", period=30.5, fourier_order=5)
     return m
 
-
+# Función de entrenamiento y predicción con Prophet
 def forecast_with_prophet(df_ts: pd.DataFrame, horizon: int = 14) -> pd.DataFrame:
     """Entrena Prophet y genera pronóstico."""
     df_ts = df_ts.rename(columns={"demand": "y"})
@@ -218,7 +220,7 @@ def forecast_with_prophet(df_ts: pd.DataFrame, horizon: int = 14) -> pd.DataFram
 
     return fcst[["ds", "yhat", "yhat_lower", "yhat_upper"]].tail(horizon)
 
-
+# Función de cálculo de riesgo a partir de predicción Prophet
 def compute_risk_from_forecast(fcst: pd.DataFrame, stock: float, lead_time: float) -> float:
     """Calcula riesgo de quiebre usando demanda futura pronosticada."""
     ventana = int(max(1, round(lead_time)))
@@ -246,7 +248,7 @@ def compute_risk_from_forecast(fcst: pd.DataFrame, stock: float, lead_time: floa
 async def serve_index():
     return FileResponse(os.path.join(BASE_DIR, "index.html"))
 
-
+# Endpoint POST /predict
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     if not file.filename:
@@ -274,7 +276,6 @@ async def predict(file: UploadFile = File(...)):
                 "details": mapping_info
             }
         )
-
 
     # 4. Conversión Numérica
     for col in ["stock", "demand", "lead_time", "unit_cost"]:

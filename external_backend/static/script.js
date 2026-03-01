@@ -150,24 +150,186 @@ function handleUserMessage() {
 }
 
 // Simulación inteligente básica
+
+let awaitingAdvancedConfirmation = false;
+let fallbackCount = 0;
+
 function simulateBotResponse(userText) {
-    let response = "No entendí tu solicitud. Puedes revisar el formato del CSV.";
 
-    if (userText.toLowerCase().includes("ejemplo")) {
-        response = "Un CSV válido debe contener columnas como: sku, stock, demand, lead_time.";
+    const text = userText
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+    const isDefinition =
+    text.includes("que es") ||
+    text.includes("que significa") ||
+    text.includes("definicion de");
+
+    const columns = ["sku", "stock", "demand", "lead_time"];
+    const mentioned = columns.filter(col => text.includes(col));
+
+    let isFallback = true;
+    let response = "No entendí tu solicitud. Puedes revisar el formato del CSV o pedirme un ejemplo.";
+
+    if (text.includes("ejemplo") || text.includes("formato")) {
+        response = "Un CSV válido debe contener las columnas: sku, stock, demand y lead_time. Ejemplo:\nsku,stock,demand,lead_time\nA123,50,30,7";
+        isFallback = false;
+        fallbackCount = 0;
     }
 
-    if (userText.toLowerCase().includes("mapear")) {
-        response = "Actualmente el mapeo automático no detectó coincidencias. ¿Deseas activar el módulo avanzado con IA?";
+    else if (mentioned.length > 0 && mentioned.length < 4) {
+        response = `Detecté que mencionas: ${mentioned.join(", ")}. Recuerda que tu CSV debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.`;
+        isFallback = false;
+        fallbackCount = 0;
     }
 
-    if (userText.toLowerCase().includes("activar")) {
-        response = "🔮 El módulo avanzado con LLM estará disponible próximamente.";
+    else if (awaitingAdvancedConfirmation && (text === "si" || text === "sí")) {
+        response = "🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (awaitingAdvancedConfirmation && text === "no") {
+        response = "Entendido. Puedes revisar la sección de Preguntas Frecuentes para más información.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (text.includes("map") || text.includes("columna")) {
+        response = "Parece que el sistema no pudo mapear automáticamente tus columnas. ¿Quieres activar el módulo avanzado con IA?";
+        awaitingAdvancedConfirmation = true;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        text.includes("activar") || text.includes("ia") || text.includes("llm") || 
+        text.includes("chatgpt") || text.includes("gemini") || text.includes("opeanai") || 
+        text.includes("anthropic") || text.includes("deepseek") || text.includes("asistencia avanzada") ||
+        text.includes("asistencia mas avanzada") || text.includes("modulo avanzado")) {
+        response = "Recuerda que la conexión con una IA externa implica conversaciones con un servicio externo, la información que proporcione es de su responsabilidad. \nSmartStock IA se compromete a enviar solo la información estrictamente necesaria (lista de columnas y esquema requerido).\n🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        (isDefinition) &&
+        text.includes("sku")
+    ) {
+        response = "SKU (Stock Keeping Unit) es un identificador único para cada producto. Permite distinguir artículos en el inventario.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (
+        (isDefinition) &&
+        text.includes("stock")
+    ) {
+        response = "Stock es la cantidad actual disponible de un producto en inventario.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (
+        (isDefinition) &&
+        text.includes("demand")
+    ) {
+        response = "Demand representa la demanda estimada o promedio de ventas de un producto en un periodo determinado.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (
+        (isDefinition) &&
+        text.includes("lead_time")
+    ) {
+        response = "Lead_time es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (
+        (isDefinition) &&
+        text.includes("csv")
+    ) {
+        response = "Un archivo CSV (Comma Separated Values) es un archivo de texto donde los datos están separados por comas. Se usa comúnmente para importar y exportar datos.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+    
+    else if (
+        (isDefinition) &&
+        text.includes("excel")
+    ) {
+        response = "Excel es un programa de hojas de cálculo que permite organizar datos en tablas. Puedes exportar tus hojas como archivo CSV desde Excel.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        text.includes("sku") &&
+        text.includes("stock") &&
+        text.includes("demand")
+    ) {
+        response = "Parece que ya tienes parte del esquema correcto. Verifica que también incluyas la columna lead_time y que los nombres coincidan exactamente.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        text.includes("no funciona") ||
+        text.includes("no funciono") ||
+        text.includes("no entiendo") ||
+        text.includes("no entendi") ||
+        text.includes("no comprendo") ||
+        text.includes("no comprendi") ||
+        text.includes("error")
+    ) {
+        response = "Lo siento mucho. ¿Deseas activar la asistencia más avanzada potenciada con IA?";
+        awaitingAdvancedConfirmation = true;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if(
+        text.includes("preguntas frecuentes") ||
+        text.includes("faq")
+    ) {
+        response = "Si lo deseas, puedes dirigirte a la pestaña de Preguntas Frecuentes en la barra lateral."
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if(text.includes("ayuda humana")){
+        response = "Por ahora, puedes dirigirte a la página de Preguntas Frecuentes en la barra lateral. La asistencia humana no es una funcionalidad contemplada por el momento. Pero nuestra sección de Preguntas Frecuentes fue escrita por humanos y para humanos. 😊"
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (text.includes("gracias")) {
+        response = "¡Con gusto! 😊 Puedes intentar subir nuevamente tu archivo cuando lo tengas listo.";
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    if (isFallback) {
+        fallbackCount++;
+    }
+    
+    if (fallbackCount >= 3) {
+        response = "Parece que estamos teniendo dificultades para resolver tu caso. ¿Deseas activar la asistencia avanzada con IA?";
+        awaitingAdvancedConfirmation = true;
+        fallbackCount = 0;
     }
 
     setTimeout(() => {
         addChatMessage("🤖 " + response, "bot");
-    }, 600);
+    }, 500);
 }
 
 // Guía de manejo de errores para el chatbot
@@ -254,7 +416,7 @@ function handleColumnMappingError(errorData) {
         message += "No se pudieron detectar columnas válidas.";
     }
 
-    message += "\n\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
+    message += "\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
 
     addChatMessage(message, "bot");
 
@@ -421,3 +583,18 @@ function toggleAccessibility() {
     const isActive = document.body.classList.contains('accessible-mode');
     console.log("Modo accesible:", isActive);
 }
+
+/**
+ * Listener del chatbot
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("chat-input");
+    if (!input) return;
+
+    input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleUserMessage();
+        }
+    });
+});
