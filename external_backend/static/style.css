@@ -13,6 +13,7 @@
     --border: rgba(255, 255, 255, 0.08);
     --text-dim: #8b949e;
     --text-main: #e6edf3;
+    --text-muted: #8b949e;
     --text-strong: #ffffff;
     --chat-user-bg: #00f2fe;
     --chat-user-text: #000000;
@@ -47,12 +48,12 @@ body {
     padding: 2rem 1rem;
 }
 
-.logo {
+.sidebar .logo {
     font-family: 'Orbitron';
     font-size: 1.4rem;
-    color: var(--text-strong);
     font-weight: 700;
     margin-bottom: 1.5rem;
+    color: var(--text-strong);
 }
 
 .logo span { color: var(--accent); }
@@ -169,7 +170,7 @@ body {
 
 .box-header h3 { margin: 0; font-family: 'Orbitron'; font-size: 0.9rem; color: var(--accent); }
 
-.insight-content { color: #cbd5e0; min-height: 120px; line-height: 1.4; }
+.insight-content { color: var(--text-main); min-height: 120px; line-height: 1.4; }
 
 .table-section table {
     width: 100%;
@@ -209,7 +210,7 @@ table tbody td {
     margin-bottom: 28px;
     line-height: 1.6;
     font-size: 0.95rem;
-    color: #dbe4ee;
+    color: var(--text-dim);
     box-shadow: 0 8px 30px rgba(0, 242, 255, 0.05);
 }
 
@@ -264,14 +265,19 @@ body.accessible-mode {
     /* General */
     /* Se utiliza un gris muy claro para diferenciar tarjetas más fácilmente */
     --bg: #ffffff;
+    --bg-sidebar: #f4f4f4;
     --card: #f0f0f0;
+    --bg-card: #ffffff;
     --text-dim: #000000;
-    --accent: #0056b3;
+    /*--accent: #0056b3;*/
+    --accent: #b8860b;
+    --accent-hover: #8b6508;
     --border: #000000;
 
     /* Texto */
     --text-main: #000000;
     --text-strong: #000000;
+    --text-muted: #333333;
 
     /* Chatbot */
     --chat-user-bg: #000000;
