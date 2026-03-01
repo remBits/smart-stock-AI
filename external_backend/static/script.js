@@ -34,6 +34,9 @@ function switchTab(tabId, element) {
         nav.classList.remove('active');
     });
     element.classList.add('active');
+
+    // Reseteo de barra navegadora
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // Preparación para renderizado de Chart.js
@@ -637,6 +640,7 @@ function populateInventoryTable(data) {
         row.onclick = () => {
             updateProductDetail(item);
             switchTab('dashboard-view', document.querySelector('.nav-item'));
+            window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
         tbody.appendChild(row);

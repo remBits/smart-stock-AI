@@ -177,14 +177,15 @@
                 <input type="email" placeholder="Correo electrónico">
                 <input type="password" placeholder="Contraseña">
                 <input type="password" placeholder="Confirmar contraseña">
-          
-                <label class="terms">
-                  <input type="checkbox">
-                  Acepto los 
-                  <span class="fake-link" onclick="showFutureFeature()">Términos y Condiciones</span> 
-                  y la 
-                  <span class="fake-link" onclick="showFutureFeature()">Política de Privacidad</span>
-                </label>
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="terms">
+                    <label for="terms"> Acepto los 
+                        <span class="fake-link" onclick="showFutureFeature()">Términos y Condiciones</span>
+                         y la 
+                         <span class="fake-link" onclick="showFutureFeature()">Política de Privacidad</span>
+                    </label>
+                </div>
           
                 <button class="btn-execute" onclick="fakeRegister()">Registrarse</button>
           
@@ -279,7 +280,9 @@
                 <h2>🔷 Transparencia</h2>
                 <ul>
                     <li><strong>¿Esto fue generado con IA?</strong> La plataforma fue desarrollada usando LLM ("IA"), sin embargo, todas las decisiones de inicio a fin son iniciadas, evaluadas, corregidas y aprobadas o denegadas por el equipo humano. SmartStock IA siempre ha mantenido y mantendrá a las personas como su motor principal.</li>
-                    <li><strong>¿Puedo ver cómo funciona el sistema?</strong> ¡Por supuesto! Para ello, visite nuestro repositorio.</li>
+                    <li><strong>¿Puedo ver cómo funciona el sistema?</strong> ¡Por supuesto! Para ello, visite <a href="https://github.com/remBits/smart-stock-AI/tree/feature/agente" target="_blank" rel="noopener">
+                        nuestro repositorio
+                    </a>.</li>
                 </ul>
 
                 <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
@@ -388,7 +391,7 @@
                 <h3>🚀 El Futuro</h3>
                 <p>Estamos construyendo el centro de comando definitivo para el retail independiente. Proyectamos integrar alertas automáticas, simuladores de ahorro en tiempo real y conexiones directas para que la gestión inteligente esté al alcance de un solo clic.</p>
 
-                <p>Visita nuestro <strong><a href="https://github.com/remBits/smart-stock-AI/tree/feature/integracion" target="_blank">repositorio en GitHub</a></strong> para ver más detalles técnicos y futuras mejoras.</p>
+                <p>Visita nuestro <strong><a href="https://github.com/remBits/smart-stock-AI/tree/feature/agente" target="_blank" rel="noopener">repositorio en GitHub</a></strong> para ver más detalles técnicos y futuras mejoras.</p>
                 
                 <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
                     "SmartStock IA: Convierte tus datos en decisiones."
