@@ -56,7 +56,9 @@ body {
     color: var(--text-strong);
 }
 
-.logo span { color: var(--accent); }
+.sidebar .logo span {
+    color: var(--accent);
+}
 
 .nav-item {
     padding: 0.9rem 1rem;
