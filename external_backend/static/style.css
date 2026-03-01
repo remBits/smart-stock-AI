@@ -12,13 +12,19 @@
     --accent: #00f2ff;
     --border: rgba(255, 255, 255, 0.08);
     --text-dim: #8b949e;
+    --text-main: #e6edf3;
+    --text-strong: #ffffff;
+    --chat-user-bg: #00f2fe;
+    --chat-user-text: #000000;
+    --chat-bot-bg: #1f1f1f;
+    --chat-bot-text: #ffffff;
 }
 
 * { box-sizing: border-box; }
 
 body {
     background: var(--bg);
-    color: #e6edf3;
+    color: var(--text-main);
     font-family: "Inter", system-ui, sans-serif;
     margin: 0;
     display: flex;
@@ -44,7 +50,7 @@ body {
 .logo {
     font-family: 'Orbitron';
     font-size: 1.4rem;
-    color: #fff;
+    color: var(--text-strong);
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
@@ -97,7 +103,7 @@ body {
     border-radius: 8px;
     border: 1px solid var(--border);
     background: transparent;
-    color: #fff;
+    color: var(--text-main);
     cursor: pointer;
     font-weight: 600;
 }
@@ -253,56 +259,64 @@ h2 {
 /* ===============================
    MODO ACCESIBLE
 ================================= */
-/* 1. General */
+/* General */
 body.accessible-mode {
+    /* General */
+    /* Se utiliza un gris muy claro para diferenciar tarjetas más fácilmente */
     --bg: #ffffff;
-    --card: #f0f0f0; /* Un gris muy claro para diferenciar tarjetas */
+    --card: #f0f0f0;
     --text-dim: #000000;
-    --accent: #0056b3; 
+    --accent: #0056b3;
     --border: #000000;
-    background: #ffffff !important; /* Se quita el degradado */
-    transition: all 0.3s ease; /* Transición más suave */
-    font-family: 'Lexend', system-ui, sans-serif; /* Uso de tipografía Lexend */
+
+    /* Texto */
+    --text-main: #000000;
+    --text-strong: #000000;
+
+    /* Chatbot */
+    --chat-user-bg: #000000;
+    --chat-user-text: #ffffff;
+
+    --chat-bot-bg: #e0e0e0;
+    --chat-bot-text: #000000;
+
+    /* Fondo */
+    /* Se quita el degradado, se hace una transición suave y se usa tipografía Lexend*/
+    background: #ffffff;
+    transition: all 0.3s ease;
+    font-family: 'Lexend', system-ui, sans-serif;
 }
 
 /* 2. Botones */
 /* Subida */
 body.accessible-mode .btn-upload {
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
+    color: #000000;
+    border: 2px solid #000000;
     font-weight: bold;
 }
 
 /* Ejecutar IA */
 body.accessible-mode .btn-execute {
-    background: #000000 !important;
-    color: #ffffff !important;
+    background: #000000;
+    color: #ffffff;
 }
 
 /* 3. Gráficos */
 body.accessible-mode .chart-box {
-    border: 2px solid #000000 !important;
+    border: 2px solid #000000;
 }
 
 body.accessible-mode #product-title {
-    color: #000000 !important;
+    color: #000000;
 }
 
 /* 4. Quitar el degradado del fondo */
 body.accessible-mode .glow-bg {
-    display: none !important;
+    display: none;
 }
 
 /* 5. Asegurar que TODO el texto sea negro (incluyendo párrafos y sidebar) */
-body.accessible-mode, 
-body.accessible-mode p, 
-body.accessible-mode div, 
-body.accessible-mode span,
-body.accessible-mode .nav-item,
-body.accessible-mode .insight-content,
-body.accessible-mode .executive-box {
-    color: #000000 !important;
-}
+/* Bloque antiguo eliminado: este bloque se utilizó para la fase anterior y ya no es necesario.*/
 
 /* 6. Corregir la Sidebar (Letras blancas sobre fondo negro de la barra) */
 body.accessible-mode .sidebar {
@@ -310,40 +324,30 @@ body.accessible-mode .sidebar {
 }
 
 body.accessible-mode .nav-item {
-    color: #ffffff !important; /* Letras blancas para que se vean en la barra negra */
+    color: #ffffff; /* Letras blancas para que se vean en la barra negra */
     border-bottom: 1px solid #333;
 }
 
 body.accessible-mode .nav-item.active {
     background: #ffff00; /* Amarillo brillante para el ítem activo (estilo alta visibilidad) */
-    color: #000000 !important;
+    color: #000000;
 }
 
 /* 7. Resaltar los <strong> en azul oscuro para que se lean bien */
 body.accessible-mode strong {
-    color: #0056b3 !important;
+    color: #0056b3;
 }
 
 /* 8. Disclaimer y mensajes de sistema */
 /* En modo accesible se hacen más visibles */
 body.accessible-mode .ia-disclaimer,
 body.accessible-mode .system-msg {
-    color: #000000 !important;
+    color: #000000;
     font-weight: bold;
 }
 
 
 /* 9. Chatbot */
-body.accessible-mode .chat-message.bot {
-    background: #e0e0e0;
-    color: #000000;
-}
-
-body.accessible-mode .chat-message.user {
-    background: #000000;
-    color: #ffffff;
-}
-
 #chat-messages:focus {
     outline: 2px solid var(--accent);
 }
@@ -387,7 +391,7 @@ body.accessible-mode .chat-message.user {
 
 /* Modo accesible: se asegura que las listas sean bien legibles. */
 body.accessible-mode .ethics-content ul {
-    color: #000 !important;
+    color: #000;
     font-size: 1rem;
 }
 
@@ -418,13 +422,14 @@ body.accessible-mode .ethics-content ul {
 }
 
 .chat-message.bot {
-    background: #1f1f1f;
+    background: var(--chat-bot-bg);
+    color: var(--chat-bot-text);
     align-self: flex-start;
 }
 
 .chat-message.user {
-    background: #00f2fe;
-    color: black;
+    background: var(--chat-user-bg);
+    color: var(--chat-user-text);
     align-self: flex-end;
 }
 
@@ -498,7 +503,7 @@ body.accessible-mode .chat-input-area button {
   
   .tab-btn.active {
     font-weight: bold;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--accent);
   }
   
   .auth-form input {
@@ -509,7 +514,7 @@ body.accessible-mode .chat-input-area button {
   }
   
   .fake-link {
-    color: var(--primary);
+    color: var(--accent);
     text-decoration: underline;
     cursor: pointer;
   }
