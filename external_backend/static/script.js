@@ -703,7 +703,7 @@ function toggleAccessibility() {
 }
 
 /**
- * Listener del chatbot
+ * LISTENER DEL CHATBOT
  */
 document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById("chat-input");
@@ -716,3 +716,60 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+/**
+ * PESTAÑA DE USUARIOS
+ */
+// --- AUTH TABS ---
+function switchAuthTab(tab) {
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+    const buttons = document.querySelectorAll(".tab-btn");
+  
+    buttons.forEach(btn => btn.classList.remove("active"));
+  
+    if (tab === "login") {
+      loginForm.classList.remove("hidden");
+      registerForm.classList.add("hidden");
+      buttons[0].classList.add("active");
+    } else {
+      registerForm.classList.remove("hidden");
+      loginForm.classList.add("hidden");
+      buttons[1].classList.add("active");
+    }
+  }
+  
+  // --- LOGIN FALSO ---
+  function fakeLogin() {
+    document.getElementById("login-message").innerText =
+      "Funcionalidad no disponible aún. A futuro aquí dirá: ¡Inicio de sesión exitoso!";
+  
+    document.getElementById("history-section").classList.remove("hidden");
+  }
+  
+  // --- REGISTRO FALSO ---
+  function fakeRegister() {
+    document.getElementById("register-message").innerText =
+      "Funcionalidad no disponible aún. A futuro aquí dirá: ¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.";
+  }
+  
+  // --- PLACEHOLDER DE FUNCIONALIDAD FUTURA ---
+  function showFutureFeature() {
+    alert("Funcionalidad futura en desarrollo.");
+  }
+
+  // --- BOTÓN DE DESCARGA FALSO ---
+  function fakeDownload(button) {
+    const row = button.closest("tr");
+  
+    let message = document.createElement("div");
+    message.className = "small-message";
+    message.innerText = "Funcionalidad futura: aquí se descargará un resumen ejecutivo en PDF.";
+  
+    row.appendChild(message);
+  
+    setTimeout(() => {
+      message.remove();
+    }, 3000);
+  }

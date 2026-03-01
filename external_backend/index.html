@@ -140,11 +140,98 @@
         </div>
 
         <div id="user-view" class="tab-content hidden">
+
             <div class="executive-box">
-                <h1><strong>🔐 Registro o inicio de sesión de usuarios</strong></h1>
-                <p>En construcción.</p>
+              <h1>🔐 Gestión de Usuarios</h1>
+              <p>Módulo de autenticación en desarrollo. Próximamente permitirá acceso seguro y almacenamiento de historial personalizado.</p>
             </div>
-        </div>
+          
+            <!-- AUTH BOX -->
+            <div class="executive-box auth-container">
+          
+              <!-- TABS -->
+              <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchAuthTab('login')">Inicia sesión</button>
+                <button class="tab-btn" onclick="switchAuthTab('register')">Regístrate</button>
+              </div>
+          
+              <!-- LOGIN FORM -->
+              <div id="login-form" class="auth-form">
+                <input type="email" placeholder="Correo electrónico">
+                <input type="password" placeholder="Contraseña">
+                
+                <button class="btn-execute" onclick="fakeLogin()">Iniciar sesión</button>
+          
+                <p class="auth-links">
+                  ¿No tienes cuenta? 
+                  <span class="fake-link" onclick="switchAuthTab('register')">Regístrate</span>
+                  <br>
+                  <span class="fake-link" onclick="showFutureFeature()">¿Olvidaste tu contraseña?</span>
+                </p>
+          
+                <p id="login-message" class="small-message"></p>
+              </div>
+          
+              <!-- REGISTER FORM -->
+              <div id="register-form" class="auth-form hidden">
+                <input type="email" placeholder="Correo electrónico">
+                <input type="password" placeholder="Contraseña">
+                <input type="password" placeholder="Confirmar contraseña">
+          
+                <label class="terms">
+                  <input type="checkbox">
+                  Acepto los 
+                  <span class="fake-link" onclick="showFutureFeature()">Términos y Condiciones</span> 
+                  y la 
+                  <span class="fake-link" onclick="showFutureFeature()">Política de Privacidad</span>
+                </label>
+          
+                <button class="btn-execute" onclick="fakeRegister()">Registrarse</button>
+          
+                <p id="register-message" class="small-message"></p>
+              </div>
+          
+            </div>
+          
+            <!-- HISTORIAL (OCULTO HASTA LOGIN) -->
+            <div id="history-section" class="executive-box hidden">
+              <h2>📊 Historial de Predicciones (Demo)</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Archivo</th>
+                    <th>SKUs</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>12/02/2026</td>
+                    <td>inventario.xlsx</td>
+                    <td>150</td>
+                    <td>✔ Completado</td>
+                    <td>
+                        <button class="btn-download" onclick="fakeDownload(this)">
+                          Descargar resumen
+                        </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>10/02/2026</td>
+                    <td>prueba.csv</td>
+                    <td>—</td>
+                    <td>❌ Error columnas</td>
+                    <td>
+                        <button class="btn-download disabled" disabled>
+                          No disponible
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         <div id="faq-view" class="tab-content hidden">
             <div class="executive-box">

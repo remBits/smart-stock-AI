@@ -474,3 +474,63 @@ body.accessible-mode .chat-input-area button {
     background: #000000;
     color: #ffffff;
 }
+
+
+/* =====================================
+   INTERFAZ DE CUENTAS DE USUARIOS
+======================================== */
+.auth-container {
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .tab-btn {
+    flex: 1;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .tab-btn.active {
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary);
+  }
+  
+  .auth-form input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  .fake-link {
+    color: var(--primary);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .small-message {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    opacity: 0.8;
+  }
+  
+  .hidden {
+    display: none;
+  }
+
+  .btn-download {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  
+  .btn-download.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
