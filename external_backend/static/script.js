@@ -163,17 +163,40 @@ function simulateBotResponse(userText) {
     .trim();
 
     const isDefinition =
-    text.includes("que es") ||
-    text.includes("que significa") ||
-    text.includes("definicion de") ||
-    text.includes("define") ||
-    text.includes("concepto");
+    text.includes("que es") || text.includes("que son") ||
+    text.includes("que significa") || text.includes("que significan") ||
+    text.includes("definicion de") || text.includes("significado de") ||
+    text.includes("define") || text.includes("defineme") ||
+    text.includes("no entiendo que") || text.includes("no entiendo lo") ||
+    text.includes("no comprendo") || text.includes("concepto");
 
     const isPossession = 
     text.includes("tengo") || text.includes("poseo") ||
     text.includes("tiene") || text.includes("posee") ||
     text.includes("contiene") || text.includes("incluye") ||
-    text.includes("inclui") || text.includes("adjunte")
+    text.includes("inclui") || text.includes("adjunte") ||
+    text.includes("agregue");
+
+    const isHelp =
+    text.includes("ayuda") || text.includes("ayudame") ||
+    text.includes("asistencia") || text.includes("asisteme") ||
+    text.includes("auxilio") || text.includes("auxiliame");
+
+    const isReal = 
+    text.includes("humana") || text.includes("real") ||
+    text.includes("humano") || text.includes("personal") ||
+    text.includes("persona") || text.includes("personas") ||
+    text.includes("verdadera") || text.includes("verdad") ||
+    text.includes("personalizada") || text.includes("calidad");
+
+    const isAdvanced =
+    text.includes("activar") || text.includes("activa") ||
+    text.includes("inicia") || text.includes("inicializa") ||
+    text.includes("ia") || text.includes("llm") || 
+    text.includes("chatgpt") || text.includes("gemini") || 
+    text.includes("opeanai") || text.includes("anthropic") || 
+    text.includes("deepseek") || text.includes("asistencia avanzada") ||
+    text.includes("asistencia mas avanzada") || text.includes("modulo avanzado");
 
     const columns = ["sku", "stock", "demand", "lead_time"];
     const mentioned = columns.filter(col => text.includes(col));
@@ -205,7 +228,7 @@ function simulateBotResponse(userText) {
         response = `Detecté que mencionas: ${mentioned.join(", ")}. Recuerda que tu CSV debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.`;
         awaitingAdvancedConfirmation = false;
         isFallback = false;
-        fallbackCount = 0;
+        fallbackCount+=0.8;
     }
 
     else if (awaitingAdvancedConfirmation && (text === "si" || text === "sí")) {
@@ -242,10 +265,16 @@ function simulateBotResponse(userText) {
     }
 
     else if (
-        text.includes("activar") || text.includes("ia") || text.includes("llm") || 
-        text.includes("chatgpt") || text.includes("gemini") || text.includes("opeanai") || 
-        text.includes("anthropic") || text.includes("deepseek") || text.includes("asistencia avanzada") ||
-        text.includes("asistencia mas avanzada") || text.includes("modulo avanzado")) {
+        isDefinition &&
+        (isAdvanced)
+    ) {
+        response = "El modo de Asistencia avanzada es una conexión con una LLM externa para ayuda más personalizada.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (isAdvanced) {
         response = "Recuerda que la conexión con una IA externa implica conversaciones con un servicio externo, la información que proporcione es de su responsabilidad. \nSmartStock IA se compromete a enviar solo la información estrictamente necesaria (lista de columnas y esquema requerido).\n🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
         awaitingAdvancedConfirmation = false;
         isFallback = false;
@@ -268,7 +297,7 @@ function simulateBotResponse(userText) {
 
     else if (
         (isDefinition) &&
-        text.includes("columna")
+        (text.includes("columna") || text.includes("columnas"))
     ) {
         response = "Una columna es conjunto de datos ordenados de arriba hacia abajo y representan un mismo tipo de información. Por ejemplo, la columna SKU representa un conjunto de productos identificados por un código único, similar al RUT o DNI de las personas.";
         awaitingAdvancedConfirmation = false;
@@ -278,7 +307,7 @@ function simulateBotResponse(userText) {
 
     else if (
         (isDefinition) &&
-        text.includes("sku")
+        (text.includes("sku") || text.includes("skus"))
     ) {
         response = "SKU (Stock Keeping Unit) es un identificador único para cada producto. Permite distinguir artículos en el inventario.";
         awaitingAdvancedConfirmation = false;
@@ -338,7 +367,7 @@ function simulateBotResponse(userText) {
 
     else if (
         (isPossession) &&
-        text.includes("sku") &&
+        (text.includes("sku") || text.includes("skus")) &&
         text.includes("stock") &&
         text.includes("demand")
     ) {
@@ -373,14 +402,33 @@ function simulateBotResponse(userText) {
         fallbackCount = 0;
     }
 
-    else if(text.includes("ayuda humana")){
+    else if(
+        (
+            text.includes("sinonimo") || text.includes("sinonimos"))
+        ||
+        (
+            (text.includes("palabra") || text.includes("palabras")) 
+            && 
+            (text.includes("igual") || text.includes("iguales")))
+    ) {
+        response = "Puedes ver una lista de sinónimos en la pestaña de Preguntas Frecuentes. El sistema ya maneja un listado, sin embargo, el vocabulario humano es diverso y variado como la humanidad misma. Es posible que, a pesar del trabajo exhaustivo ya realizado, existan diferencias."
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount+= 0.8;
+    }
+
+    else if(
+        (isHelp)
+        &&
+        (isReal)
+        ) {
         response = "Por ahora, puedes dirigirte a la página de Preguntas Frecuentes en la barra lateral. La asistencia humana no es una funcionalidad contemplada por el momento. Pero nuestra sección de Preguntas Frecuentes fue escrita por humanos y para humanos. 😊"
         awaitingAdvancedConfirmation = false;
         isFallback = false;
-        fallbackCount = 0;
+        fallbackCount+= 0.8;
     }
 
-    else if(text === "ayuda") {
+    else if(isHelp) {
         response = "¡Por supuesto! Puedes pedirme un ejemplo, preguntarme qué significan algunos conceptos o ir a la sección de Preguntas Frecuentes, escrita por humanos y para humanos. 😄";
         awaitingAdvancedConfirmation = false;
         isFallback = false;
