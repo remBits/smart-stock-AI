@@ -165,7 +165,15 @@ function simulateBotResponse(userText) {
     const isDefinition =
     text.includes("que es") ||
     text.includes("que significa") ||
-    text.includes("definicion de");
+    text.includes("definicion de") ||
+    text.includes("define") ||
+    text.includes("concepto");
+
+    const isPossession = 
+    text.includes("tengo") || text.includes("poseo") ||
+    text.includes("tiene") || text.includes("posee") ||
+    text.includes("contiene") || text.includes("incluye") ||
+    text.includes("inclui") || text.includes("adjunte")
 
     const columns = ["sku", "stock", "demand", "lead_time"];
     const mentioned = columns.filter(col => text.includes(col));
@@ -175,12 +183,27 @@ function simulateBotResponse(userText) {
 
     if (text.includes("ejemplo") || text.includes("formato")) {
         response = "Un CSV válido debe contener las columnas: sku, stock, demand y lead_time. Ejemplo:\nsku,stock,demand,lead_time\nA123,50,30,7";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
 
-    else if (mentioned.length > 0 && mentioned.length < 4) {
+    else if (
+        text.includes("gracias") || text.includes("agradezco") || 
+        text.includes("agradecida") || text.includes("agradecido")
+        ) {
+        response = "¡Con gusto! 😊 Puedes intentar subir nuevamente tu archivo cuando lo tengas listo.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        (isPossession) &&
+        (mentioned.length > 0 && mentioned.length < 4)
+        ) {
         response = `Detecté que mencionas: ${mentioned.join(", ")}. Recuerda que tu CSV debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.`;
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -198,8 +221,20 @@ function simulateBotResponse(userText) {
         isFallback = false;
         fallbackCount = 0;
     }
+    
 
-    else if (text.includes("map") || text.includes("columna")) {
+    else if (
+        (
+            text.includes("map") ||
+            text.includes("mapeo") ||
+            text.includes("mapear")
+        )
+        &&
+        (
+            text.includes("columna") ||
+            text.includes("columnas")
+        )
+        ) {
         response = "Parece que el sistema no pudo mapear automáticamente tus columnas. ¿Quieres activar el módulo avanzado con IA?";
         awaitingAdvancedConfirmation = true;
         isFallback = false;
@@ -218,10 +253,35 @@ function simulateBotResponse(userText) {
     }
 
     else if (
+        isDefinition &&
+        (
+            text.includes("mapeo") ||
+            text.includes("mapear") ||
+            text.includes("map")
+        )
+    ) {
+        response = "El mapeo de columnas es la forma en que el sistema reconoce los datos que usará para predecir. Si no puede reconocerlas, no puede predecir.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        (isDefinition) &&
+        text.includes("columna")
+    ) {
+        response = "Una columna es conjunto de datos ordenados de arriba hacia abajo y representan un mismo tipo de información. Por ejemplo, la columna SKU representa un conjunto de productos identificados por un código único, similar al RUT o DNI de las personas.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
         (isDefinition) &&
         text.includes("sku")
     ) {
         response = "SKU (Stock Keeping Unit) es un identificador único para cada producto. Permite distinguir artículos en el inventario.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -231,6 +291,7 @@ function simulateBotResponse(userText) {
         text.includes("stock")
     ) {
         response = "Stock es la cantidad actual disponible de un producto en inventario.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -240,6 +301,7 @@ function simulateBotResponse(userText) {
         text.includes("demand")
     ) {
         response = "Demand representa la demanda estimada o promedio de ventas de un producto en un periodo determinado.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -249,6 +311,7 @@ function simulateBotResponse(userText) {
         text.includes("lead_time")
     ) {
         response = "Lead_time es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -258,6 +321,7 @@ function simulateBotResponse(userText) {
         text.includes("csv")
     ) {
         response = "Un archivo CSV (Comma Separated Values) es un archivo de texto donde los datos están separados por comas. Se usa comúnmente para importar y exportar datos.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -267,16 +331,19 @@ function simulateBotResponse(userText) {
         text.includes("excel")
     ) {
         response = "Excel es un programa de hojas de cálculo que permite organizar datos en tablas. Puedes exportar tus hojas como archivo CSV desde Excel.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
 
     else if (
+        (isPossession) &&
         text.includes("sku") &&
         text.includes("stock") &&
         text.includes("demand")
     ) {
         response = "Parece que ya tienes parte del esquema correcto. Verifica que también incluyas la columna lead_time y que los nombres coincidan exactamente.";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
@@ -301,18 +368,21 @@ function simulateBotResponse(userText) {
         text.includes("faq")
     ) {
         response = "Si lo deseas, puedes dirigirte a la pestaña de Preguntas Frecuentes en la barra lateral."
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
 
     else if(text.includes("ayuda humana")){
         response = "Por ahora, puedes dirigirte a la página de Preguntas Frecuentes en la barra lateral. La asistencia humana no es una funcionalidad contemplada por el momento. Pero nuestra sección de Preguntas Frecuentes fue escrita por humanos y para humanos. 😊"
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
 
-    else if (text.includes("gracias")) {
-        response = "¡Con gusto! 😊 Puedes intentar subir nuevamente tu archivo cuando lo tengas listo.";
+    else if(text === "ayuda") {
+        response = "¡Por supuesto! Puedes pedirme un ejemplo, preguntarme qué significan algunos conceptos o ir a la sección de Preguntas Frecuentes, escrita por humanos y para humanos. 😄";
+        awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
     }
