@@ -57,7 +57,7 @@ async function processData() {
     const msgBox = document.getElementById('system-msg');
     
     if (!fileInput.files[0]) {
-        alert("SISTEMA: Por favor cargue un archivo CSV válido.");
+        alert("SISTEMA: Por favor cargue un archivo CSV o Excel válido.");
         return;
     }
 
@@ -202,7 +202,7 @@ function simulateBotResponse(userText) {
     const mentioned = columns.filter(col => text.includes(col));
 
     let isFallback = true;
-    let response = "No entendí tu solicitud. Puedes revisar el formato del CSV o pedirme un ejemplo.";
+    let response = "No entendí tu solicitud. Puedes revisar el formato del CSV (o Excel) o pedirme un ejemplo.";
 
     if (text.includes("ejemplo") || text.includes("formato")) {
         response = "Un CSV válido debe contener las columnas: sku, stock, demand y lead_time. Ejemplo:\nsku,stock,demand,lead_time\nA123,50,30,7";
@@ -225,7 +225,7 @@ function simulateBotResponse(userText) {
         (isPossession) &&
         (mentioned.length > 0 && mentioned.length < 4)
         ) {
-        response = `Detecté que mencionas: ${mentioned.join(", ")}. Recuerda que tu CSV debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.`;
+        response = `Detecté que mencionas: ${mentioned.join(", ")}. Recuerda que tu CSV o Excel debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.`;
         awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount+=0.8;
@@ -349,7 +349,7 @@ function simulateBotResponse(userText) {
         (isDefinition) &&
         text.includes("csv")
     ) {
-        response = "Un archivo CSV (Comma Separated Values) es un archivo de texto donde los datos están separados por comas. Se usa comúnmente para importar y exportar datos.";
+        response = "Un archivo CSV (Comma Separated Values) es un archivo de texto donde los datos están separados por comas. Se usa comúnmente para importar y exportar datos.\nSmartStock IA también acepta Excel.";
         awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
@@ -359,7 +359,7 @@ function simulateBotResponse(userText) {
         (isDefinition) &&
         text.includes("excel")
     ) {
-        response = "Excel es un programa de hojas de cálculo que permite organizar datos en tablas. Puedes exportar tus hojas como archivo CSV desde Excel.";
+        response = "Excel es un programa de hojas de cálculo que permite organizar datos en tablas. Puedes exportar tus hojas como archivo CSV desde Excel, aunque SmartStockIA también acepta Excel.";
         awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
@@ -458,7 +458,7 @@ function generateErrorGuidance(errorMessage) {
     }
 
     if (errorMessage.includes("Invalid file format")) {
-        return "El archivo parece tener un formato inválido. Verifica que esté delimitado por comas y guardado como CSV UTF-8.";
+        return "El archivo parece tener un formato inválido. Verifica que esté delimitado por comas y guardado como CSV UTF-8 o Excel.";
     }
 
     if (errorMessage.includes("Empty file")) {
@@ -534,7 +534,7 @@ function handleColumnMappingError(errorData) {
         message += "No se pudieron detectar columnas válidas.";
     }
 
-    message += "\nPor favor verifica el formato del CSV y vuelve a intentarlo.";
+    message += "\nPor favor verifica el formato del CSV o Excel y vuelve a intentarlo.";
 
     addChatMessage(message, "bot");
 

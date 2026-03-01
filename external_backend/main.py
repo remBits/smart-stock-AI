@@ -71,19 +71,30 @@ def try_read_csv_bytes(b: bytes) -> pd.DataFrame:
 
     raise HTTPException(status_code=400, detail="No se pudo parsear el CSV.")
 
+# Lectura de Excel
+def try_read_excel_bytes(b: bytes) -> pd.DataFrame:
+    """Intenta leer bytes de un archivo Excel en un DataFrame."""
+    try:
+        df = pd.read_excel(io.BytesIO(b), engine="openpyxl")
+        if isinstance(df, pd.DataFrame) and not df.empty:
+            return df
+        else:
+            raise HTTPException(status_code=400, detail="Excel vacío o inválido.")
+    except Exception:
+        raise HTTPException(status_code=400, detail="No se pudo parsear el archivo Excel.")
+
 # Normalización y mapeo de columnas primario
 def normalize_and_map_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Normaliza nombres y mapea alias comunes."""
     df = df.copy()
-    df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+    df.columns = df.columns.astype(str).str.strip().str.lower().str.replace(" ", "_")
 
     rename_map = {
+        "sku_code": "sku", "id": "sku", "producto": "sku", "item": "sku", "product_id": "sku",
         "inventario": "stock", "cantidad": "stock", "existencias": "stock", "qty": "stock",
         "demanda": "demand", "consumo": "demand", "ventas": "demand", "sales": "demand",
-        "leadtime": "lead_time", "entrega": "lead_time", "plazo_entrega": "lead_time",
-        "precio": "unit_cost", "costo": "unit_cost", "unit_price": "unit_cost",
-        "sku_code": "sku", "id": "sku", "producto": "sku", "item": "sku", "product_id": "sku",
-        "lead_time_days": "lead_time", "cost": "unit_cost"
+        "leadtime": "lead_time", "entrega": "lead_time", "plazo_entrega": "lead_time", "lead_time_days": "lead_time",
+        "precio": "unit_cost", "costo": "unit_cost", "unit_price": "unit_cost", "cost": "unit_cost"
     }
     df.rename(columns=rename_map, inplace=True)
     return df
@@ -259,7 +270,14 @@ async def predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Archivo vacío.")
 
     # 1. Lectura Robusta
-    df = try_read_csv_bytes(content)
+    filename = file.filename.lower()
+    
+    if filename.endswith(".csv"):
+        df = try_read_csv_bytes(content)
+    elif filename.endswith(".xlsx") or filename.endswith(".xls"):
+        df = try_read_excel_bytes(content)
+    else:
+        raise HTTPException(status_code=400, detail="Formato no soportado. Use CSV o Excel.")
 
     # 2. Normalización y Mapeo
     df = normalize_and_map_columns(df)
