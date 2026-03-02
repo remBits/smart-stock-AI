@@ -558,3 +558,18 @@ body.accessible-mode .chat-input-area button {
     align-items: center;
     gap: 0.5rem;
 }
+
+/* =======================================
+   PESTAÑA SKU: CENTRO DE DEFINICIONES
+========================================== */
+.definition-box {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    min-height: 60px;
+}
+.def-term {
+    cursor: pointer;
+    text-decoration: underline dotted;
+}

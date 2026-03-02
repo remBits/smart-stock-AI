@@ -870,7 +870,7 @@ function renderExecutiveChart(top3) {
     executiveChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: top3[0].chart_data.map((_, i) => `Periodo ${i + 1}`),
+            labels: top3[0].chart_data.map((_, i) => `Día ${i + 1}`),
             datasets: datasets
         },
         options: {
@@ -980,3 +980,22 @@ function switchAuthTab(tab) {
       message.remove();
     }, 3000);
   }
+
+/**
+ * PESTAÑA DE SKU: INTERPRETABILIDAD Y ACCESIBILIDAD
+ */
+const definitions = {
+    sku: "SKU (Stock Keeping Unit) es un identificador único para cada producto dentro del inventario.",
+    descripcion: "Descripción del producto.",
+    stock: "Stock es la cantidad actual disponible de un producto en inventario.",
+    rop: "ROP (Reorder Point) es el punto de reposición: el nivel de stock en el que se recomienda realizar un nuevo pedido.",
+    risk: "El nivel de riesgo representa la probabilidad estimada de quiebre de stock durante el periodo proyectado."
+};
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("def-term")) {
+        const term = e.target.dataset.term;
+        const box = document.getElementById("definition-box");
+        box.innerText = definitions[term] || "Definición no disponible.";
+    }
+});

@@ -117,6 +117,12 @@
 
         <div id="inventory-view" class="tab-content hidden">
             <header class="top-header"><h1>Reporte de SKUs</h1></header>
+            <div class="definition-helper">
+                <p><strong>Centro de definiciones:</strong> Haz clic en un concepto para ver su explicación.</p>
+                <div id="definition-box" class="definition-box">
+                    <em>Aquí aparecerá la definición seleccionada.</em>
+                </div>
+            </div>
             <div id="inventory-explanation" class="explanation-box"></div>
             <section id="macro-dashboard" class="macro-panel hidden">
                 <div class="macro-grid">
@@ -144,7 +150,13 @@
             <div class="table-section">
                 <table>
                     <thead>
-                        <tr><th>SKU</th><th>Categoría</th><th>ROP</th><th>Stock</th><th>Riesgo</th></tr>
+                        <tr>
+                            <th><span class="def-term" data-term="sku">SKU</span></th>
+                            <th><span class="def-term" data-term="descripcion">Descripción</span></th>
+                            <th><span class="def-term" data-term="rop">ROP</span></th>
+                            <th><span class="def-term" data-term="stock">Stock</span></th>
+                            <th><span class="def-term" data-term="risk">Riesgo</span></th>
+                        </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
                 </table>
@@ -270,10 +282,10 @@
                     <li><strong>¿Mi inventario debe cumplir algún requisito?</strong> Solo necesita tener las columnas mínimas para funcionar: sku, stock, demand y lead_time.</li>
                     <li><strong>¿Y qué significan esos conceptos?</strong>
                         <ul>
-                            <li>SKU (Stock Keeping Unit): es un identificador único para cada producto. Permite distinguir artículos en el inventario.</li>
-                            <li>Stock: es la cantidad actual disponible de un producto en inventario.</li>
-                            <li>Demand: es la demanda estimada o promedio de ventas de un producto en un periodo determinado.</li>
-                            <li>Lead_time: es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.</li>
+                            <li><b>SKU (Stock Keeping Unit):</b> es un identificador único para cada producto. Permite distinguir artículos en el inventario.</li>
+                            <li><b>Stock:</b> es la cantidad actual disponible de un producto en inventario.</li>
+                            <li><b>Demand:</b> es la demanda estimada o promedio de ventas de un producto en un periodo determinado.</li>
+                            <li><b>Lead_time:</b> es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.</li>
                         </ul>
                     </li>
                     <li><strong>¿Por qué podrían haber problemas con el archivo?</strong> El modelo de IA utiliza los nombres de las columnas para identificar la información que necesita para predecir. Si no las identifica, no puede predecir. Es decir, el mapeo de columnas falla. Si el sistema no logra identificar correctamente las columnas necesarias, no podrá generar una predicción válida.</li>
