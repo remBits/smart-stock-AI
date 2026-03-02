@@ -12,8 +12,42 @@ El sistema procesa datos de inventario (SKU, stock, demanda, punto de reposició
 
 La aplicación se encuentra disponible en [smart-stock-ai.onrender.com](smart-stock-ai.onrender.com).
 
-A continuación, se 
---- 
+A continuación, encontramos las secciones de:
+
+* Estructura del repositorio
+* Transparencia
+* Cómo usar la aplicación
+* Funcionalidades principales
+* Estado del Proyecto y Mejoras Futuras
+
+Esto para ofrecer una visión completa sobre el producto.
+
+---
+
+## 📁 Estructura del repositorio
+
+El proyecto está organizado de la siguiente manera:
+
+```
+data/
+├── *.CSV                     # Archivos de datos de ejemplo
+
+external_backend/
+├── index.html                # Interfaz principal de la aplicación
+├── main.py                   # Lógica de procesamiento y API
+└── static/
+    ├── script.js             # Lógica frontend (visualización y filtros)
+    └── style.css             # Estilos y modo accesible
+
+notebooks/
+└── EDA_pipeline_MVP_inicial.ipynb   # Exploración de datos y prototipo inicial
+
+.gitignore
+README.md
+requirements.txt
+```
+
+---
 
 ## 🤝 Transparencia
 
@@ -70,6 +104,7 @@ En la pestaña de SKUs, el usuario puede revisar el inventario completo, aplicar
 * Backend: API externa para procesamiento predictivo basada en Python
 * Visualización: Chart.js
 * Diseño accesible con soporte para modo estándar y modo accesible
+* Mantención de la funcionalidad de la página mediante automatización (UptimeRobot: funcionalidad de Monitor de PING)
 
 ## 🔐 Privacidad
 
@@ -87,12 +122,13 @@ MVP funcional con:
 * Procesamiento de inventario
 * Interpretación automatizada
 * Visualización dinámica
-* Filtro interactivo
 * Prototipo de asistente contextual
 
 ### 📈 Próximas mejoras
 
 * Integración completa con módulo LLM avanzado para el asistente
+* Explicabilidad del backend actual mediante notebook
+* 
 * Mejora de filtros tipo Excel
 * Implementación de capa de persistencia
 * Exportación de reportes

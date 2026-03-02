@@ -1063,8 +1063,15 @@ document.getElementById("explain-prediction").addEventListener("click", () => {
     document.getElementById("chat-container").classList.remove("hidden");
 });
 
-document.getElementById("explain-prediction").addEventListener("click", () => {
-    const box = document.getElementById("chatbot-proto-msg");
-    box.classList.remove("hidden");
-    box.innerText = "🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("explain-prediction");
+    if (btn) {
+        btn.addEventListener("click", function() {
+            const box = document.getElementById("chatbot-proto-msg");
+            if (box) {
+                box.classList.remove("hidden");
+                box.innerText = "🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
+            }
+        });
+    }
 });
