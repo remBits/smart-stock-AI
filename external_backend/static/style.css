@@ -211,11 +211,13 @@ table tbody td {
     border-radius: 14px;
     padding: 18px 20px;
     margin-top: 12px;
-    margin-bottom: 28px;
+    margin-bottom: 34px;
     line-height: 1.6;
     font-size: 0.95rem;
     color: var(--text-dim);
     box-shadow: 0 8px 30px rgba(0, 242, 255, 0.05);
+    position: relative;
+    width: 100%;
 }
 
 .executive-box strong {

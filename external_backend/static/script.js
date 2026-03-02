@@ -119,7 +119,9 @@ async function processData() {
 
         // 5. Gráfico para Resumen Ejecutivo (primera iteración, revisar si funcionó)
         generateExecutiveSummary(data);
+        setTimeout(() => {
         renderExecutiveChart(top3);
+        }, 100);
 
     } catch (error) {
         console.error("Error:", error);
@@ -711,7 +713,22 @@ function updateProductDetail(item) {
     document.getElementById('v-risk').innerText = item.risk + "%";
     document.getElementById('v-order').innerText = item.suggested_order;
     document.getElementById('v-save').innerText = "$" + item.savings.toLocaleString('es-CL');
-    document.getElementById('insight-text').innerText = item.ai_interpretation;
+    
+    const explanation = `
+    El producto analizado es ${item.sku} perteneciente a la categoría ${item.category}.
+    
+    Actualmente presenta un nivel de riesgo de ${item.risk}%, lo que indica la probabilidad estimada de quiebre de stock durante el periodo proyectado.
+    
+    ${item.ai_interpretation}
+    
+    La compra sugerida es de ${item.suggested_order} unidades, lo que permitiría reducir el riesgo operativo y estabilizar el inventario.
+    
+    El impacto económico estimado asociado a esta decisión es de $${item.savings.toLocaleString('es-CL')} en capital optimizable.
+    
+    El gráfico adjunto muestra la proyección de demanda para los próximos periodos, permitiendo anticipar tendencias y planificar reposiciones de manera informada.
+    `;
+    
+    document.getElementById('insight-text').innerText = explanation;
 
     // Actualizar el gráfico lineal
     renderMainChart(item.chart_data, item.sku);
