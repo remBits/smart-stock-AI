@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Smartstock IA • Command Center</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glow-bg"></div>
+
+    <nav class="sidebar">
+        <div class="logo">SmartStock <span>IA</span></div>
+        <div class="nav-links">
+            <div class="nav-item active" onclick="switchTab('dashboard-view', this)">📊 Panel</div>
+            <div class="nav-item" onclick="switchTab('inventory-view', this)">📦 SKUs</div>
+            <div class="nav-item" onclick="toggleAccessibility()" style="border-top: 1px solid var(--border); margin-top: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;">
+                ⭐️ Modo Accesible
+            </div>
+            <div class="nav-item" onclick="switchTab('user-view', this)">🔐 Usuarios</div>
+            <div class="nav-item" onclick="switchTab('faq-view', this)">🤝 Preguntas Frecuentes (FAQ)</div>
+            <div class="nav-item" onclick="switchTab('ethics-view', this)">⚖️ Ética y Accesibilidad</div>
+            <div class="nav-item" onclick="switchTab('about-view', this)">👥 Sobre Nosotros</div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div id="dashboard-view" class="tab-content">
+            <header class="top-header">
+                <div class="header-text">
+                    <h1>Command Center <span class="live-tag">LIVE</span></h1>
+                    <p>Optimización predictiva para inventarios</p>
+                </div>
+                <div class="actions">
+                    <input type="file" id="csvFile" accept=".csv, .xlsx" hidden>
+                    <button class="btn-upload" onclick="document.getElementById('csvFile').click()">📂 Cargar CSV o Excel</button>
+                    <button id="btnProcess" class="btn-execute" onclick="processData()">EJECUTAR IA</button>
+                </div>
+            </header>
+        
+            <div id="system-msg" class="system-msg"></div>
+
+            <div id="chat-container" class="chat-box hidden">
+                <div id="chat-messages" tabindex="0" aria-live="polite"></div>
+            
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." />
+                    <button onclick="handleUserMessage()">Enviar</button>
+                </div>
+            </div>
+            
+            <p class="ia-disclaimer">
+                ⚠️ Smartstock IA es una herramienta de apoyo. Las decisiones finales de compra deben ser validadas por el equipo de operaciones.
+            </p>
+
+            <div id="welcome-msg" class="welcome-container">
+                <div class="welcome-content">
+                    <span class="pulse-icon">📡</span>
+                    <h2>Sistema en espera de datos</h2>
+                    <p>Para comenzar el análisis predictivo, por favor carga un archivo <strong>.csv</strong> o <strong>Excel (.xlsx)</strong> y presiona <strong>EJECUTAR IA</strong>.</p>
+                    <p>Nota: Los datos se procesan en tiempo real y no se almacenan. Para su privacidad, evite subir columnas con datos personales.</p>
+                </div>
+            </div>
+        
+            <section id="results-area" class="hidden">
+                
+                <h2>📊 Resumen Ejecutivo</h2>
+                <div id="executive-summary" class="executive-box">
+    
+                    <div id="executive-text"></div>
+                
+                    <div style="height:300px;">
+                        <canvas id="executiveChart"></canvas>
+                    </div>
+                
+                    <p class="chart-subtitle">
+                        Pronóstico semanal de los 3 productos más críticos del inventario.
+                    </p>
+                </div>
+        
+                <h2>🔎 Resumen Técnico</h2>
+                <p>
+                    Esta sección muestra el análisis detallado de un producto seleccionado.
+                    Puede cambiar de producto desde la pestaña <strong>SKUs</strong> para explorar otros casos.
+                </p>
+        
+                <div class="kpi-grid">
+                    <div class="kpi-card highlight">
+                        <span class="label">Nivel de Riesgo</span>
+                        <h2 id="v-risk">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Compra Sugerida</span>
+                        <h2 id="v-order">--</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="label">Capital</span>
+                        <h2 id="v-save">--</h2>
+                    </div>
+                </div>
+        
+                <div class="mid-section">
+                    <div class="chart-box">
+                        <div class="box-header"><h3>Pronóstico Semanal</h3></div>
+                        <h3 id="product-title"></h3>
+                        <div style="height:300px;"><canvas id="mainChart"></canvas></div>
+                    </div>
+                    <div class="insight-box">
+                        <div class="box-header"><h3>Detalle Operativo</h3></div>
+                        <div id="insight-text" class="insight-content"></div>
+                    </div>
+                </div>
+
+                <h3 class="section-title chatbot-title">🤖 Asistente SmartStock IA</h3>
+                <p>Si desea <strong>ayuda personalizada</strong> para una comprensión más profunda de su análisis, puede activar el chatbot.</p>
+                <p>Nuestro asistente personalizado está potenciado con IA. Por favor, recuerde que su uso implica la utilización de un servicio externo.</p>
+                <p>Nosotros nos comprometemos a nunca compartir su información personal.</p>
+                <button id="explain-prediction" class="primary-btn">
+                    ¿Necesitas ayuda para interpretar este análisis?
+                </button>
+                
+                <div id="chatbot-proto-msg" class="proto-box hidden"></div>
+            </section>
+        </div>
+
+        <div id="inventory-view" class="tab-content hidden">
+            <header class="top-header"><h1>Reporte de SKUs</h1></header>
+            <div id="inventory-explanation" class="explanation-box"></div>
+            <div class="definition-helper">
+                <p><strong>Centro de definiciones:</strong> Haz clic en un concepto para ver su explicación.</p>
+                <div id="definition-box" class="definition-box">
+                    <em>Aquí aparecerá la definición seleccionada.</em>
+                </div>
+            </div>
+            <section id="macro-dashboard" class="macro-panel hidden">
+                <div class="macro-grid">
+                    <div class="macro-card">
+                        <h3>Riesgo Promedio</h3>
+                        <p id="kpi-risk">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Capital Inmovilizado</h3>
+                        <p id="kpi-capital">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>SKU Críticos</h3>
+                        <p id="kpi-critical">--</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Demanda Total</h3>
+                        <p id="kpi-demand">--</p>
+                    </div>
+                </div>
+                <!-- <div class="chart-wrapper"> -->
+                    <!-- <canvas id="macroChart"></canvas> -->
+                <!-- </div> -->
+            </section>
+            <div class="risk-filter">
+                <p><b>Filtro de productos por riesgo: </b></p>
+                <label><input type="checkbox" value="critical" checked> Crítico</label>
+                <label><input type="checkbox" value="medium" checked> Medio</label>
+                <label><input type="checkbox" value="low" checked> Bajo</label>
+            </div>
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr class="sku-row ${riskLevel}"></tr>
+                            <th><span class="def-term" data-term="sku">SKU</span></th>
+                            <th><span class="def-term" data-term="descripcion">Descripción</span></th>
+                            <th><span class="def-term" data-term="rop">ROP</span></th>
+                            <th><span class="def-term" data-term="stock">Stock</span></th>
+                            <th><span class="def-term" data-term="risk">Riesgo</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+        <div id="user-view" class="tab-content hidden">
+
+            <div class="executive-box">
+              <h1><strong>🔐 Gestión de Usuarios</strong></h1>
+              <p>Módulo de autenticación en desarrollo. Próximamente permitirá acceso seguro y almacenamiento de historial personalizado.</p>
+            </div>
+          
+            <!-- AUTH BOX -->
+            <div class="executive-box auth-container">
+          
+              <!-- TABS -->
+              <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchAuthTab('login')">Inicia sesión</button>
+                <button class="tab-btn" onclick="switchAuthTab('register')">Regístrate</button>
+              </div>
+          
+              <!-- LOGIN FORM -->
+              <div id="login-form" class="auth-form">
+                <input type="email" placeholder="Correo electrónico">
+                <input type="password" placeholder="Contraseña">
+                
+                <button class="btn-execute" onclick="fakeLogin()">Iniciar sesión</button>
+          
+                <p class="auth-links">
+                  ¿No tienes cuenta? 
+                  <span class="fake-link" onclick="switchAuthTab('register')">Regístrate</span>
+                  <br>
+                  <span class="fake-link" onclick="showFutureFeature()">¿Olvidaste tu contraseña?</span>
+                </p>
+          
+                <p id="login-message" class="small-message"></p>
+              </div>
+          
+              <!-- REGISTER FORM -->
+              <div id="register-form" class="auth-form hidden">
+                <input type="email" placeholder="Correo electrónico">
+                <input type="password" placeholder="Contraseña">
+                <input type="password" placeholder="Confirmar contraseña">
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="terms">
+                    <label for="terms"> Acepto los 
+                        <span class="fake-link" onclick="showFutureFeature()">Términos y Condiciones</span>
+                         y la 
+                         <span class="fake-link" onclick="showFutureFeature()">Política de Privacidad</span>
+                    </label>
+                </div>
+          
+                <button class="btn-execute" onclick="fakeRegister()">Registrarse</button>
+          
+                <p id="register-message" class="small-message"></p>
+              </div>
+          
+            </div>
+          
+            <!-- HISTORIAL (OCULTO HASTA LOGIN) -->
+            <div id="history-section" class="executive-box hidden">
+              <h2>📊 Historial de Predicciones (Demo)</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Archivo</th>
+                    <th>SKUs</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>12/02/2026</td>
+                    <td>inventario.xlsx</td>
+                    <td>150</td>
+                    <td>✔ Completado</td>
+                    <td>
+                        <button class="btn-download" onclick="fakeDownload(this)">
+                          Descargar resumen
+                        </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>10/02/2026</td>
+                    <td>prueba.csv</td>
+                    <td>—</td>
+                    <td>❌ Error columnas</td>
+                    <td>
+                        <button class="btn-download disabled" disabled>
+                          No disponible
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        <div id="faq-view" class="tab-content hidden">
+            <div class="executive-box">
+                <h1><strong>🤝 Preguntas Frecuentes (Frequently Asked Questions)</strong></h1>
+                <p>¡Bienvenido a la sección de Preguntas Frecuentes! Aquí recopilamos las dudas más comunes que puedan surgir con respecto a nuestra plataforma.</p>
+
+                <h2>🔷 Uso</h2>
+                <ul>
+                    <li><strong>¿Qué es SmartStock IA?</strong> SmartStock IA es un sistema de optimización de inventarios diseñado especialmente para Pymes. Permite transformar datos históricos en decisiones estratégicas de reposición de manera simple y accesible para todo tipo de usuario.</li>
+                    <li><strong>¿Cómo funciona?</strong> El sistema analiza el archivo de inventario y entrega una predicción. Solo debes presionar “Cargar CSV o Excel”, subir tu archivo y luego hacer clic en “Ejecutar IA”. Si el archivo presenta algún problema, el chatbot de ayuda se activará automáticamente para guiarte.</li>
+                    <li><strong>¿Qué hace el chatbot?</strong> Maneja problemas comunes con los archivos CSV de forma clara y amigable. Indica qué columnas faltan, cuáles presentan errores y brinda ejemplos prácticos para corregirlos.</li>
+                </ul>
+
+                <h2>🔷 Privacidad</h2>
+                <ul>
+                    <li><strong>¿Hay riesgo de fuga de información?</strong> Los archivos se procesan de forma temporal para generar la predicción y luego se descartan. SmartStock IA no almacena los archivos CSV o Excel de sus usuarios.</li>
+                    <li><strong>¿Y las predicciones se guardan?</strong> Actualmente, SmartStock IA tampoco guarda las predicciones. Se planea guardar el resultado general de una predicción a futuro y permitir que los usuarios registrados tengan acceso a esta funcionalidad.</li>
+                </ul>
+
+                <h2>🔷 Requisitos técnicos</h2>
+                <ul>
+                    <li><strong>¿Qué necesito para usar la aplicación?</strong> Solo el archivo de inventario, un dispositivo capaz de conectarse a Internet y un navegador.</li>
+                    <li><strong>¿Mi inventario debe cumplir algún requisito?</strong> Solo necesita tener las columnas mínimas para funcionar: sku, stock, demand y lead_time.</li>
+                    <li><strong>¿Y qué significan esos conceptos?</strong>
+                        <ul>
+                            <li><b>SKU (Stock Keeping Unit):</b> es un identificador único para cada producto. Permite distinguir artículos en el inventario.</li>
+                            <li><b>Stock:</b> es la cantidad actual disponible de un producto en inventario.</li>
+                            <li><b>Demand:</b> es la demanda estimada o promedio de ventas de un producto en un periodo determinado.</li>
+                            <li><b>Lead_time:</b> es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.</li>
+                        </ul>
+                    </li>
+                    <li><strong>¿Por qué podrían haber problemas con el archivo?</strong> El modelo de IA utiliza los nombres de las columnas para identificar la información que necesita para predecir. Si no las identifica, no puede predecir. Es decir, el mapeo de columnas falla. Si el sistema no logra identificar correctamente las columnas necesarias, no podrá generar una predicción válida.</li>
+                    <li><strong>¿No manejaron esto antes?</strong> El sistema posee un diccionario de sinónimos como identificación o “mapeo” de columnas primario y una función inteligente para mapeo secundario. Si ambos fallan, aparece el error que activa el chatbot.</li>
+                    <li><strong>¿Qué otros nombres pueden tener las columnas?</strong> 
+                        <p>El mapeo primario contempla los siguientes sinónimos:</p>
+                        <ul>
+                            <li>SKU: sku_code, id, producto, item, product_id</li>
+                            <li>stock: inventario, cantidad, existencias, qty</li>
+                            <li>demand: demanda, consumo, ventas, sales</li>
+                            <li>lead_time: leadtime, entrega, plazo_entrega, lead_time_days</li>
+                            <li>unit_cost: precio, costo, unit_price, cost</li>
+                        </ul>
+                        <p>El mapeo es capaz de comprender el nombre de la columna incluso si las mayúsculas y minúsculas difieren, porque solo necesita que el texto sea igual. Si tanto el mapeo primario y secundario de columnas han fallado, se sugiere revisar el nombre de las columnas y, de ser posible, modificarlo a uno que sea parte de la lista para asegurar su correcta lectura por parte de la aplicación.</p>
+                    </li>
+                    <li><strong>¿Es necesario que tenga esas columnas?</strong> Sin esas columnas, el sistema no puede generar una predicción, pues la información es insuficiente. Las columnas obligatorias son: SKU, stock, demand, y lead_time. Además de esas 4 columnas obligatorias, el CSV puede incluir las columnas de fecha (o “date”) y unit_cost para mejorar la predicción obtenida.</li>
+                </ul>
+
+                <h2>🔷 Asistencia al usuario</h2>
+                <ul>
+                    <li><strong>¿Y si esta ayuda no me es suficiente?</strong> El chatbot contempla la adición de una conexión con un modelo LLM en la versión Pro para mejorar este problema. Esta funcionalidad no ha sido implementada aún.</li>
+                    <li><strong>¿Puedo obtener ayuda humana?</strong> Lamentablemente, por el momento la asistencia humana no está contemplada como función para el futuro.</li>
+                </ul>
+
+                <h2>🔷 Transparencia</h2>
+                <ul>
+                    <li><strong>¿Esto fue generado con IA?</strong> La plataforma fue desarrollada usando LLM ("IA"), sin embargo, todas las decisiones de inicio a fin son iniciadas, evaluadas, corregidas y aprobadas o denegadas por el equipo humano. SmartStock IA siempre ha mantenido y mantendrá a las personas como su motor principal.</li>
+                    <li><strong>¿Puedo ver cómo funciona el sistema?</strong> ¡Por supuesto! Para ello, visite <a href="https://github.com/remBits/smart-stock-AI/tree/feature/agente" target="_blank" rel="noopener">
+                        nuestro repositorio
+                    </a>.</li>
+                </ul>
+
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
+                    ¡Gracias por confiar en SmartStock IA!
+                </p>
+            </div>
+        </div>
+        
+        <div id="ethics-view" class="tab-content hidden">
+            <div class="executive-box ethics-content">
+                <h1><strong>SmartStock AI - Código de Ética y Accesibilidad</strong></h1>
+                
+                <h2>🧱 1. Código de Ética</h2>
+                <p>SmartStock AI se compromete a desarrollar y operar tecnología de inteligencia artificial con responsabilidad, transparencia y respeto hacia las Pymes y sus comunidades. Nuestro código de ética se basa en cinco principios:</p>
+                
+                <ol>
+                    <li><strong>Transparencia en el uso de datos</strong>
+                        <ul>
+                            <li>Explicamos claramente qué datos se usan y para qué.</li>
+                            <li>No recolectamos información innecesaria.</li>
+                            <li>El usuario siempre mantiene el control de sus datos.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Privacidad y protección de la información</strong>
+                        <ul>
+                            <li>Los datos de ventas y stock se procesan de forma segura.</li>
+                            <li>No compartimos información con terceros sin consentimiento.</li>
+                            <li>Aplicamos buenas prácticas de seguridad para evitar filtraciones.</li>
+                        </ul>
+                    </li>
+                    <li><strong>IA responsable y explicable</strong>
+                        <ul>
+                            <li>Justificación clara en recomendaciones (demanda, riesgo, nivel óptimo).</li>
+                            <li>Evitamos modelos “caja negra” en decisiones críticas.</li>
+                            <li>El usuario puede revisar y corregir las recomendaciones.</li>
+                        </ul>
+                    </li>
+                    <li><strong>No discriminación y equidad</strong>
+                        <ul>
+                            <li>Sin favoritismos por proveedores, marcas o productos.</li>
+                            <li>Decisiones basadas únicamente en datos objetivos.</li>
+                            <li>Evitamos sesgos que perjudiquen a negocios pequeños.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Sostenibilidad y eficiencia</strong>
+                        <ul>
+                            <li>Reducción de desperdicios mediante inventarios eficientes.</li>
+                            <li>Optimización de capital y recursos para Pymes.</li>
+                            <li>Fomento de prácticas responsables en la cadena de suministro.</li>
+                        </ul>
+                    </li>
+                </ol>
+            
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+            
+                <h2>♿ 2. Accesibilidad</h2>
+                <p>Diseñado para todo tipo de usuarios, independientemente de sus capacidades o limitaciones tecnológicas.</p>
+                
+                <ol>
+                    <li><strong>Interfaz simple y clara</strong>
+                        <ul>
+                            <li>Dashboard intuitivo y lenguaje sin tecnicismos.</li>
+                            <li>Recomendaciones directas y accionables.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Compatibilidad técnica</strong>
+                        <ul>
+                            <li>Funciona en navegadores estándar y hardware básico.</li>
+                            <li>Optimizado para conexiones inestables.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Inclusión y Discapacidad</strong>
+                        <ul>
+                            <li>Alto contraste para baja visión y soporte para lectores de pantalla.</li>
+                            <li>Botones grandes y etiquetas descriptivas.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Inclusión digital</strong>
+                        <ul>
+                            <li>Carga vía CSV simple o Excel para Pymes sin sistemas complejos (ERP).</li>
+                            <li>Guías paso a paso integradas.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div> 
+        </div>
+
+        <div id="about-view" class="tab-content hidden">
+            <h2>👥 Sobre Nosotros</h2>
+            <div class="executive-box">
+                <h1><strong>Sobre SmartStock IA</strong></h1>
+                
+                <p>Cada día, una Pyme pierde ventas sin notarlo. SmartStock IA nace para cerrar esa brecha, transformando datos históricos en decisiones estratégicas de reposición. No somos solo una herramienta de análisis; somos el motor de acción para el comercio local.</p>
+            
+                <h3>🎯 Nuestra Propuesta</h3>
+                <p>Convertimos la complejidad de la ciencia de datos en recomendaciones claras: <strong>cuándo y cuánto reponer</strong>. A través de modelos avanzados como <em>Prophet</em> y cálculos de optimización de stock, ayudamos a:</p>
+                <ul>
+                    <li><strong>Reducir quiebres:</strong> No pierdas más ventas por falta de producto.</li>
+                    <li><strong>Eliminar inventario muerto:</strong> Libera capital inmovilizado en artículos que no rotan.</li>
+                    <li><strong>Mejorar el flujo de caja:</strong> Compra solo lo que realmente vas a vender.</li>
+                </ul>
+            
+                <h3>💡 Tecnología con Propósito</h3>
+                <p>Sabemos que muchas Pymes no cuentan con sistemas ERP complejos. Por eso, diseñamos una interfaz <strong>accesible, simple y humana</strong>. Nuestra prioridad es eliminar las barreras tecnológicas para que cualquier emprendedor, sin importar su nivel de alfabetización digital, pueda competir en igualdad de condiciones.</p>
+            
+                <h3>🚀 El Futuro</h3>
+                <p>Estamos construyendo el centro de comando definitivo para el retail independiente. Proyectamos integrar alertas automáticas, simuladores de ahorro en tiempo real y conexiones directas para que la gestión inteligente esté al alcance de un solo clic.</p>
+
+                <p>Visita nuestro <strong><a href="https://github.com/remBits/smart-stock-AI/tree/feature/agente" target="_blank" rel="noopener">repositorio en GitHub</a></strong> para ver más detalles técnicos y futuras mejoras.</p>
+                
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: var(--accent);">
+                    "SmartStock IA: Convierte tus datos en decisiones."
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

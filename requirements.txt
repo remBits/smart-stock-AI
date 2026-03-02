@@ -1,6 +1,10 @@
 fastapi
-uvicorn
+uvicorn[standard]
 pandas
+numpy
+scipy
 prophet
 scikit-learn
 matplotlib
+python-multipart
+openpyxl
