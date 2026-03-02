@@ -102,6 +102,10 @@ async function processData() {
 
         // 1. Actualizar KPIs Globales
         updateGlobalMetrics(data);
+        
+        setTimeout(() => {
+            renderExecutiveChart(top3);
+        }, 100);
 
         // 2. Renderizar Detalle del primer producto detectado
         if (data.length > 0) {
@@ -117,11 +121,8 @@ async function processData() {
         document.getElementById("chat-container").classList.add("hidden");
         document.getElementById("chat-messages").innerHTML = "";
 
-        // 5. Gráfico para Resumen Ejecutivo (primera iteración, revisar si funcionó)
+        // 5. Gráfico para Resumen Ejecutivo (segunda iteración, revisar si funcionó)
         generateExecutiveSummary(data);
-        setTimeout(() => {
-        renderExecutiveChart(top3);
-        }, 100);
 
     } catch (error) {
         console.error("Error:", error);
@@ -623,8 +624,23 @@ function updateGlobalMetrics(data) {
     document.getElementById('kpi-capital').innerText = "$" + totalSavings.toLocaleString('es-CL');
     document.getElementById('kpi-critical').innerText = criticalCount;
     document.getElementById('kpi-demand').innerText = totalDemand + " SKUs";
-    document.getElementById('executive-summary').innerHTML = 
+    document.getElementById('executive-text').innerHTML =
     generateExecutiveSummary(data);
+
+    // Interpretabilidad de SKUs
+    const percentageCritical = Math.round((criticalCount / data.length) * 100);
+    
+    document.getElementById('inventory-explanation').innerText = `
+    Esta sección resume el estado general de su inventario.
+    
+    El riesgo promedio es de ${avgRisk}%, lo que refleja el nivel global de exposición a quiebres de stock.
+    
+    Actualmente, ${criticalCount} SKUs (${percentageCritical}% del total) se encuentran en estado crítico y requieren atención prioritaria.
+    
+    El capital potencialmente optimizable asciende a $${totalSavings.toLocaleString('es-CL')}, lo que representa recursos que podrían gestionarse de manera más eficiente.
+    
+    En total se analizaron ${totalDemand} productos.
+    `;
 }
 
 /**

@@ -68,12 +68,16 @@
                 
                 <h2>📊 Resumen Ejecutivo</h2>
                 <div id="executive-summary" class="executive-box">
-                    <div style ="height:300px;">
+    
+                    <div id="executive-text"></div>
+                
+                    <div style="height:300px;">
                         <canvas id="executiveChart"></canvas>
                     </div>
-                    
+                
                     <p class="chart-subtitle">
-                        Pronóstico semanal de los 3 productos más críticos del inventario.</p>
+                        Pronóstico semanal de los 3 productos más críticos del inventario.
+                    </p>
                 </div>
         
                 <h2>🔎 Resumen Técnico</h2>
@@ -113,6 +117,7 @@
 
         <div id="inventory-view" class="tab-content hidden">
             <header class="top-header"><h1>Reporte de SKUs</h1></header>
+            <div id="inventory-explanation" class="explanation-box"></div>
             <section id="macro-dashboard" class="macro-panel hidden">
                 <div class="macro-grid">
                     <div class="macro-card">
@@ -249,7 +254,7 @@
                 <h2>🔷 Uso</h2>
                 <ul>
                     <li><strong>¿Qué es SmartStock IA?</strong> SmartStock IA es un sistema de optimización de inventarios diseñado especialmente para Pymes. Permite transformar datos históricos en decisiones estratégicas de reposición de manera simple y accesible para todo tipo de usuario.</li>
-                    <li><strong>¿Cómo funciona?</strong> Solo debes presionar “Cargar CSV o Excel”, subir tu archivo y luego hacer clic en “Ejecutar IA”. Si el archivo presenta algún problema, el chatbot de ayuda se activará automáticamente para guiarte.</li>
+                    <li><strong>¿Cómo funciona?</strong> El sistema analiza el archivo de inventario y entrega una predicción. Solo debes presionar “Cargar CSV o Excel”, subir tu archivo y luego hacer clic en “Ejecutar IA”. Si el archivo presenta algún problema, el chatbot de ayuda se activará automáticamente para guiarte.</li>
                     <li><strong>¿Qué hace el chatbot?</strong> Maneja problemas comunes con los archivos CSV de forma clara y amigable. Indica qué columnas faltan, cuáles presentan errores y brinda ejemplos prácticos para corregirlos.</li>
                 </ul>
 
@@ -261,7 +266,16 @@
 
                 <h2>🔷 Requisitos técnicos</h2>
                 <ul>
-                    <li><strong>¿Qué necesito para usar la aplicación?</strong> Solo un dispositivo capaz de conectarse a Internet y un navegador.</li>
+                    <li><strong>¿Qué necesito para usar la aplicación?</strong> Solo el archivo de inventario, un dispositivo capaz de conectarse a Internet y un navegador.</li>
+                    <li><strong>¿Mi inventario debe cumplir algún requisito?</strong> Solo necesita tener las columnas mínimas para funcionar: sku, stock, demand y lead_time.</li>
+                    <li><strong>¿Y qué significan esos conceptos?</strong>
+                        <ul>
+                            <li>SKU (Stock Keeping Unit): es un identificador único para cada producto. Permite distinguir artículos en el inventario.</li>
+                            <li>Stock: es la cantidad actual disponible de un producto en inventario.</li>
+                            <li>Demand: es la demanda estimada o promedio de ventas de un producto en un periodo determinado.</li>
+                            <li>Lead_time: es el tiempo que tarda un proveedor en reabastecer un producto desde que se realiza el pedido.</li>
+                        </ul>
+                    </li>
                     <li><strong>¿Por qué podrían haber problemas con el archivo?</strong> El modelo de IA utiliza los nombres de las columnas para identificar la información que necesita para predecir. Si no las identifica, no puede predecir. Es decir, el mapeo de columnas falla. Si el sistema no logra identificar correctamente las columnas necesarias, no podrá generar una predicción válida.</li>
                     <li><strong>¿No manejaron esto antes?</strong> El sistema posee un diccionario de sinónimos como identificación o “mapeo” de columnas primario y una función inteligente para mapeo secundario. Si ambos fallan, aparece el error que activa el chatbot.</li>
                     <li><strong>¿Qué otros nombres pueden tener las columnas?</strong> 
