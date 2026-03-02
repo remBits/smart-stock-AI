@@ -1027,3 +1027,10 @@ function applyFilter() {
         }
     });
 }
+
+/**
+ * PROTOTIPO: CHATBOT ASISTENTE DE PREDICCIONES EXITOSAS (CÓDIGO 200)
+ */
+document.getElementById("explain-prediction").addEventListener("click", () => {
+    document.getElementById("chat-container").classList.remove("hidden");
+});
