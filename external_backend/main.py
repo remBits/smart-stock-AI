@@ -402,6 +402,7 @@ async def predict(file: UploadFile = File(...)):
                 "mode": mode,
                 "impact_level": impact,
                 "reorder_urgency": urgency,
+                "days_cover": days_cover,
                 "llm_available": False
             })
         except Exception as e_row:

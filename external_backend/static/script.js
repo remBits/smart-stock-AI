@@ -40,7 +40,8 @@ function switchTab(tabId, element) {
 }
 
 // Preparación para renderizado de Chart.js
-let chartInstance = null;
+let chartInstance = null; // resumen técnico
+let executiveChartInstance = null; // resumen ejecutivo
 
 /**
  * PREPARACIÓN FUNCIONES
@@ -91,6 +92,9 @@ async function processData() {
         
         const data = await response.json();
 
+        const sorted = [...data].sort((a, b) => b.risk - a.risk);
+        const top3 = sorted.slice(0, Math.min(3, sorted.length));
+
         // Revelar secciones del Dashboard y ocultar mensaje de bienvenida
         document.getElementById('welcome-msg').classList.add('hidden');
         document.getElementById('macro-dashboard').classList.remove('hidden');
@@ -112,6 +116,10 @@ async function processData() {
         // 4. Ocultar chat en los casos de éxito
         document.getElementById("chat-container").classList.add("hidden");
         document.getElementById("chat-messages").innerHTML = "";
+
+        // 5. Gráfico para Resumen Ejecutivo (primera iteración, revisar si funcionó)
+        generateExecutiveSummary(data);
+        renderExecutiveChart(top3);
 
     } catch (error) {
         console.error("Error:", error);
@@ -183,7 +191,10 @@ function simulateBotResponse(userText) {
     const isHelp =
     text.includes("ayuda") || text.includes("ayudame") ||
     text.includes("asistencia") || text.includes("asisteme") ||
-    text.includes("auxilio") || text.includes("auxiliame");
+    text.includes("auxilio") || text.includes("auxiliame") ||
+    text.includes("me ayudes") || text.includes("me auxilies") ||
+    text.includes("me asistas") || text.includes("ayudeme") || 
+    text.includes("auxilieme") || text.includes("asistame");
 
     const isReal = 
     text.includes("humana") || text.includes("real") ||
@@ -201,13 +212,17 @@ function simulateBotResponse(userText) {
     text.includes("deepseek") || text.includes("asistencia avanzada") ||
     text.includes("asistencia mas avanzada") || text.includes("modulo avanzado");
 
+    const isLack = 
+    text.includes("falta") || text.includes("faltaba") ||
+    text.includes("faltaria");
+
     const columns = ["sku", "stock", "demand", "lead_time"];
     const mentioned = columns.filter(col => text.includes(col));
 
     let isFallback = true;
     let response = "No entendí tu solicitud. Puedes revisar el formato del CSV (o Excel) o pedirme un ejemplo.";
 
-    if (text.includes("ejemplo") || text.includes("formato")) {
+    if (text.includes("ejemplo") || text.includes("formato") || text.includes("ejemplos")) {
         response = "Un CSV válido debe contener las columnas: sku, stock, demand y lead_time. Ejemplo:\nsku,stock,demand,lead_time\nA123,50,30,7";
         awaitingAdvancedConfirmation = false;
         isFallback = false;
@@ -232,6 +247,15 @@ function simulateBotResponse(userText) {
         awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount+=0.8;
+    }
+
+    else if (
+        isLack
+    ) {
+        response = 'Recuerda que tu CSV o Excel debe incluir las cuatro columnas obligatorias: sku, stock, demand y lead_time.'
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount+= 0.8;
     }
 
     else if (awaitingAdvancedConfirmation && (text === "si" || text === "sí")) {
@@ -369,6 +393,16 @@ function simulateBotResponse(userText) {
     }
 
     else if (
+        (isDefinition) &&
+        text.includes("rop")
+    ) {
+        response = "ROP es el Punto de Reposición e indica el nivel de stock al que un producto debería reponerse. Permite evitar quiebres de stock, buscando el equilibrio para evitar el sobrestock, y es una de las métricas que se podrán calcular cuando tu archivo pueda ser leído por el sistema.";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
         (isPossession) &&
         (text.includes("sku") || text.includes("skus")) &&
         text.includes("stock") &&
@@ -433,6 +467,30 @@ function simulateBotResponse(userText) {
 
     else if(isHelp) {
         response = "¡Por supuesto! Puedes pedirme un ejemplo, preguntarme qué significan algunos conceptos o ir a la sección de Preguntas Frecuentes, escrita por humanos y para humanos. 😄";
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (text.includes("hola")) {
+        response = "¡Hola! Siempre es un gusto ayudarte. Puedes pedirme un ejemplo, preguntarme por algunos conceptos o ir a la sección de Preguntas Frecuentes."
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (text.includes("adios") || text.includes("chao")) {
+        response = "¡Adiós! Si necesitas más ayuda, aquí estaré. ¡Que tengas un excelente día!"
+        awaitingAdvancedConfirmation = false;
+        isFallback = false;
+        fallbackCount = 0;
+    }
+
+    else if (
+        text.includes("gracias a ti") || text.includes("no, a ti") || 
+        text.includes("a ud") || text.includes("a usted")
+        ) {
+        response = "Siempre es un gusto ayudarte. Si necesitas más ayuda, aquí estaré. ¡Que tengas un excelente día!"
         awaitingAdvancedConfirmation = false;
         isFallback = false;
         fallbackCount = 0;
@@ -568,26 +626,75 @@ function updateGlobalMetrics(data) {
 }
 
 /**
- * Genera el texto del Resumen Ejecutivo
+ * Genera el texto del Resumen Ejecutivo (versión explicativa y accionable)
  */
 function generateExecutiveSummary(data) {
 
     const totalRisk = data.reduce((acc, curr) => acc + curr.risk, 0);
     const avgRisk = Math.round(totalRisk / data.length);
 
-    const critical = data.filter(item => item.risk > 75).length;
-    const medium = data.filter(item => item.risk > 40 && item.risk <= 75).length;
+    const criticalItems = data
+        .filter(item => item.risk > 75)
+        .sort((a, b) => b.risk - a.risk);
+
+    const mediumItems = data
+        .filter(item => item.risk > 40 && item.risk <= 75)
+        .sort((a, b) => b.risk - a.risk);
 
     const totalSavings = data.reduce((acc, curr) => acc + curr.savings, 0);
 
-    // Producto más crítico
-    const topRiskItem = data.reduce((max, item) => item.risk > max.risk ? item : max, data[0]);
+    const topRiskItem = criticalItems.length > 0 
+        ? criticalItems[0] 
+        : data.reduce((max, item) => item.risk > max.risk ? item : max, data[0]);
+
+    // Tomamos máximo 3 de cada categoría
+    const top3Critical = criticalItems.slice(0, 3);
+    const top3Medium = mediumItems.slice(0, 3);
 
     return `
-    <p>El riesgo promedio del inventario es de <strong>${avgRisk}%</strong>, con <strong>${critical}</strong> productos en estado crítico y ${medium} en riesgo medio.</p>
-    <p>El sistema proyecta la demanda semanal y calcula puntos de reposición para recomendar cuándo y cuánto reordenar cada producto.</p>
-    <p>El capital potencialmente optimizable asciende a <strong>$${totalSavings.toLocaleString('es-CL')}</strong>.</p>
-    <p>🔴 Producto más crítico actual: <strong>${topRiskItem.sku}</strong> - ${topRiskItem.risk}% de riesgo.</p>
+    <p><strong>Resumen Ejecutivo</strong></p>
+
+    <p>Este resumen presenta las principales conclusiones generadas a partir del análisis de su inventario.</p>
+
+    <p>El riesgo promedio del inventario es de <strong>${avgRisk}%</strong>. 
+    Este indicador refleja qué tan expuestos están sus productos a posibles quiebres de stock o reposiciones tardías si no se toman acciones preventivas.</p>
+
+    <p>Se detectaron <strong>${criticalItems.length}</strong> productos en estado crítico y 
+    <strong>${mediumItems.length}</strong> en riesgo medio.</p>
+
+    ${top3Critical.length > 0 ? `
+    <p><strong>Productos más urgentes (riesgo crítico):</strong></p>
+    <ul>
+        ${top3Critical.map(item => `
+            <li><strong>${item.sku}</strong> — ${item.risk}% de riesgo</li>
+        `).join("")}
+    </ul>
+    ` : ""}
+
+    ${top3Medium.length > 0 ? `
+    <p><strong>Productos a monitorear (riesgo medio):</strong></p>
+    <ul>
+        ${top3Medium.map(item => `
+            <li><strong>${item.sku}</strong> — ${item.risk}% de riesgo</li>
+        `).join("")}
+    </ul>
+    ` : ""}
+
+    <p>El producto con mayor nivel de riesgo actualmente es 
+    <strong>${topRiskItem.sku}</strong>. 
+    Se recomienda evaluar reposición de aproximadamente 
+    <strong>${Math.round(topRiskItem.suggested_order || 0)} unidades</strong> 
+    dentro de los próximos 
+    <strong>${Math.round(topRiskItem.days_cover || 0)} días</strong>, 
+    para evitar quiebres de stock.</p>
+
+    <p>Para otros productos, se recomienda ver los detalles en la sección de Resumen Técnico.</p>
+
+    <p>Una gestión ineficiente del inventario puede impactar directamente en la liquidez del negocio. 
+    En este caso, el capital potencialmente optimizable asciende a 
+    <strong>$${totalSavings.toLocaleString('es-CL')}</strong>.</p>
+
+    <p>A continuación, puede observar el pronóstico semanal de demanda de los tres productos más relevantes, lo que permite anticipar tendencias y planificar reposiciones con mayor precisión.</p>
     `;
 }
 
@@ -648,7 +755,7 @@ function populateInventoryTable(data) {
 }
 
 /**
- * Renderizado de Chart.js
+ * Renderizado de Chart.js principal
  */
 function renderMainChart(points, sku) {
     const ctx = document.getElementById('mainChart').getContext('2d');
@@ -689,6 +796,69 @@ function renderMainChart(points, sku) {
                 x: { 
                     grid: { display: false },
                     ticks: { color: '#888' }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Renderizado de Chart.js del Resumen Ejecutivo
+ */
+function renderExecutiveChart(top3) {
+
+    if (!top3 || top3.length === 0) return;
+
+    const canvas = document.getElementById('executiveChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    if (executiveChartInstance) {
+        executiveChartInstance.destroy();
+    }
+
+    const accessibleColors = [
+        { border: '#D62828', dash: [] },
+        { border: '#1D3557', dash: [6,6] },
+        { border: '#2A9D8F', dash: [2,2] }
+    ];
+
+    const datasets = top3.map((item, index) => ({
+        label: `${item.sku} (${item.risk}%)`,
+        data: item.chart_data,
+        borderColor: accessibleColors[index].border,
+        borderDash: accessibleColors[index].dash,
+        borderWidth: 3,
+        fill: false,
+        tension: 0.3
+    }));
+
+    executiveChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: top3[0].chart_data.map((_, i) => `Periodo ${i + 1}`),
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Demanda proyectada'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Periodo'
+                    }
                 }
             }
         }
