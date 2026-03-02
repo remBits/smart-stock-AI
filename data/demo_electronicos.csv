@@ -1,0 +1,100 @@
+product_id,product_name,category,cost,lead_time_days,price,stock,demand
+SKU-0011,AndesTech Cable HDMI Edición 2026,Accessorios,23.84,14,37.49,29,5
+SKU-0002,Atacama DAC portátil Plus,Audio,136.76,10,181.89,187,78
+SKU-0003,Zonda Cargador USB-C Compacto,Accessorios,20.88,13,27.35,583,271
+SKU-0004,AndesTech DAC portátil Plus,Audio,157.35,4,218.72,448,107
+SKU-0005,Zonda Control inalámbrico Compacto,Gaming,73.94,5,91.69,187,40
+SKU-0006,Surik Teléfono inteligente Lite,Smartphones,581.12,17,650.85,79,43
+SKU-0007,Volta DAC portátil Edición 2026,Audio,117.83,11,135.5,293,136
+SKU-0008,AndesTech Cámara digital Max,Cameras,687.38,12,845.48,54,56
+SKU-0009,Pionyx Módem Lite,Network,196.42,3,253.38,105,187
+SKU-0010,Altamar Smartphone Compacto,Smartphones,220.54,20,262.44,89,2
+SKU-0011,Atacama Smartphone compacto Plus,Smartphones,576.22,20,674.18,23,50
+SKU-0012,Altamar Silla gamer Plus,Gaming,146.0,10,173.74,165,89
+SKU-0013,Pionyx Parlante Bluetooth Eco,Audio,109.59,8,144.66,241,21
+SKU-0014,AndesTech Cámara digital 2ª Gen,Cameras,415.88,7,515.69,80,21
+SKU-0015,AndesTech DAC portátil Avanzado,Audio,35.78,3,44.01,269,239
+SKU-0016,Surik Router Wi‑Fi Lite,Network,70.22,7,87.07,470,27
+SKU-0017,Zonda Timbre inteligente Max,Smart Home,168.41,7,212.2,10,91
+SKU-0018,Arauco Silla gamer Plus,Gaming,344.92,9,407.01,141,77
+SKU-0019,Pacífico All-in-One Edición 2026,Computadores,401.65,28,433.78,56,4
+SKU-0020,Arauco Router Wi‑Fi Edición 2026,Network,72.61,11,91.49,79,51
+SKU-0021,Zonda Móvil 5G Edición 2026,Smartphones,404.05,24,452.54,62,42
+SKU-0022,Zonda DAC portátil Lite,Audio,185.86,4,243.48,482,70
+SKU-0023,Pacífico Cargador inalámbrico Serie X,Accessorios,3.78,6,5.37,268,87
+SKU-0024,Cordillera Cámara réflex Lite,Cameras,302.74,16,336.04,72,33
+SKU-0025,Pacífico Notebook ultraligero Pro,Computadores,1044.43,22,1159.32,96,12
+SKU-0026,Arauco Smartphone compacto Lite,Smartphones,505.38,28,611.51,11,6
+SKU-0027,Zonda Termostato inteligente Plus,Smart Home,116.94,16,168.39,103,65
+SKU-0028,Arauco TV QLED Eco,TV & Video,363.51,10,392.59,35,54
+SKU-0029,Volta Proyector doméstico Pro,TV & Video,818.51,11,974.03,51,50
+SKU-0030,Pacífico Lente estándar 2ª Gen,Cameras,236.13,28,288.08,117,14
+SKU-0031,Zonda Reloj inteligente Compacto,Wearables,44.36,26,53.68,48,98
+SKU-0032,Pacífico Cargador USB-C Lite,Accessorios,17.31,3,22.68,186,294
+SKU-0033,Zonda Portátil Max,Computadores,692.15,7,747.52,67,25
+SKU-0034,Pionyx Cargador inalámbrico Compacto,Accessorios,55.03,10,75.94,306,73
+SKU-0035,Zonda Funda para smartphone Serie X,Accessorios,47.15,14,71.67,516,148
+SKU-0036,Altamar Reloj inteligente Eco,Wearables,111.29,13,127.98,132,93
+SKU-0037,Zonda Consola de videojuegos Lite,Gaming,204.63,11,247.6,149,50
+SKU-0038,Zonda Gafas inteligentes Pro,Wearables,180.96,25,204.48,178,91
+SKU-0039,AndesTech Parlante Bluetooth Plus,Audio,70.86,12,87.87,375,300
+SKU-0040,AndesTech Adaptador Wi‑Fi USB Avanzado,Network,171.61,5,217.94,292,154
+SKU-0041,Arauco Trípode 2ª Gen,Cameras,153.36,28,177.9,74,2
+SKU-0042,Atacama Gafas inteligentes Compacto,Wearables,55.88,25,63.14,169,90
+SKU-0043,Altamar Teclado mecánico Avanzado,Gaming,280.78,18,362.21,171,79
+SKU-0044,Zonda Módem Plus,Network,51.29,11,62.06,164,157
+SKU-0045,Cordillera Smartphone compacto Pro,Smartphones,344.1,25,388.83,81,22
+SKU-0046,Arauco Banda deportiva Compacto,Wearables,70.98,7,93.69,165,46
+SKU-0047,Pacífico Smartphone compacto Lite,Smartphones,361.67,15,441.24,47,53
+SKU-0048,Atacama Cámara digital Lite,Cameras,142.54,28,176.75,96,29
+SKU-0049,Zonda Power bank Edición 2026,Accessorios,17.7,13,27.43,65,132
+SKU-0050,AndesTech Bombilla inteligente 2ª Gen,Smart Home,180.46,14,234.6,148,50
+SKU-0051,Zonda Smartphone Pro Plus,Smartphones,365.22,26,420.0,62,55
+SKU-0052,AndesTech Timbre inteligente Eco,Smart Home,237.11,21,336.7,88,69
+SKU-0053,Volta Parlante Bluetooth Avanzado,Audio,131.47,12,174.86,83,118
+SKU-0054,Altamar Gafas inteligentes Edición 2026,Wearables,185.01,7,209.06,32,70
+SKU-0055,Pionyx TV OLED Edición 2026,TV & Video,754.3,27,829.73,78,15
+SKU-0056,Arauco Barra de sonido Serie X,Audio,130.93,3,176.76,434,258
+SKU-0057,Volta Proyector doméstico Pro,TV & Video,648.56,17,713.42,78,47
+SKU-0058,Atacama Proyector doméstico Plus,TV & Video,544.5,10,680.62,45,19
+SKU-0059,Zonda Smartphone Eco,Smartphones,333.02,28,399.62,71,26
+SKU-0060,Zonda Trípode Pro,Cameras,287.78,17,351.09,29,22
+SKU-0061,Arauco Consola de videojuegos Compacto,Gaming,105.05,20,141.82,35,6
+SKU-0062,Volta Funda para smartphone Serie X,Accessorios,41.43,8,54.69,83,152
+SKU-0063,Volta Reproductor multimedia Max,TV & Video,790.01,26,900.61,97,58
+SKU-0064,Cordillera Teléfono inteligente Pro,Smartphones,387.16,7,449.11,46,13
+SKU-0065,Pionyx Enchufe inteligente Serie X,Smart Home,205.02,16,293.18,146,99
+SKU-0066,Altamar Auriculares 2ª Gen,Audio,97.08,9,126.2,299,124
+SKU-0067,Surik Teléfono inteligente Max,Smartphones,368.46,22,445.84,102,52
+SKU-0068,Arauco Consola de videojuegos 2ª Gen,Gaming,195.59,5,250.36,90,67
+SKU-0069,Pacífico PC de escritorio 2ª Gen,Computadores,654.9,18,779.33,99,39
+SKU-0070,AndesTech Cámara digital Max,Cameras,81.11,26,97.33,7,22
+SKU-0071,Atacama Silla gamer Serie X,Gaming,44.28,18,54.02,57,28
+SKU-0072,Zonda Cargador inalámbrico Pro,Accessorios,47.86,7,71.79,497,209
+SKU-0073,Arauco Banda deportiva Max,Wearables,162.63,10,190.28,169,21
+SKU-0074,Atacama Parlante Bluetooth Lite,Audio,60.33,5,73.6,100,190
+SKU-0075,Cordillera Reloj inteligente Max,Wearables,233.12,28,261.09,126,22
+SKU-0076,Zonda TV QLED Eco,TV & Video,672.9,18,820.94,99,5
+SKU-0077,Volta Smartphone 2ª Gen,Smartphones,380.7,22,430.19,55,14
+SKU-0078,Cordillera Monitor de actividad Serie X,Wearables,166.22,23,186.17,124,96
+SKU-0079,Surik Router Wi‑Fi Avanzado,Network,95.28,3,120.05,81,151
+SKU-0080,Arauco Portátil 2ª Gen,Computadores,681.93,9,784.22,44,10
+SKU-0081,Surik Lente estándar Avanzado,Cameras,81.36,11,98.45,92,3
+SKU-0082,Arauco Reloj inteligente Pro,Wearables,180.13,16,235.97,115,76
+SKU-0083,Pacífico Router Wi‑Fi Compacto,Network,184.56,7,239.93,132,55
+SKU-0084,Pionyx Smartphone compacto Compacto,Smartphones,561.64,20,668.35,39,54
+SKU-0085,Volta Extensor de señal Edición 2026,Network,214.6,14,255.37,240,178
+SKU-0086,Arauco Mouse gamer Compacto,Gaming,270.96,7,360.38,169,55
+SKU-0087,Pionyx TV OLED Serie X,TV & Video,332.45,14,359.05,47,43
+SKU-0088,Zonda Televisor 4K Compacto,TV & Video,444.35,18,546.55,49,23
+SKU-0089,Altamar Adaptador Wi‑Fi USB Edición 2026,Network,141.51,14,188.21,188,278
+SKU-0090,Arauco Proyector doméstico Pro,TV & Video,282.02,16,327.14,87,28
+SKU-0091,Zonda Teléfono inteligente Pro,Smartphones,274.44,23,321.09,61,35
+SKU-0092,Pionyx Cargador USB-C 2ª Gen,Accessorios,42.15,8,56.48,88,172
+SKU-0093,Volta Televisor 4K Serie X,TV & Video,882.1,18,1032.06,15,35
+SKU-0094,Arauco All-in-One Pro,Computadores,688.09,22,750.02,49,22
+SKU-0095,Pionyx Smartphone Pro Edición 2026,Smartphones,149.04,10,174.38,55,19
+SKU-0096,Arauco Power bank Max,Accessorios,48.09,7,62.52,500,276
+SKU-0097,AndesTech Termostato inteligente Eco,Smart Home,82.34,21,117.75,93,38
+SKU-0098,Atacama PC de escritorio Plus,Computadores,610.01,22,707.61,92,5
+SKU-0099,AndesTech TV OLED 2ª Gen,TV & Video,399.86,12,443.84,83,55

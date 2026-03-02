@@ -1,0 +1,31 @@
+product_id,product_name,category,brand,unit,unit_size,cost_clp,price_clp,margin,stock,reorder_point,stock_critico,demand,lead_time_days,supplier
+LIBR-0001,Altovalle Regla 30 cm,Organización,Altovalle,unidad,1 un,3557,5087,0.43,2,2,SI,2,7,Altovalle Supply
+LIBR-0002,Aysén Lápiz pasta azul,Escritura,Aysén,unidad,1 un,1133,1552,0.37,10,10,SI,39,5,Altovalle Supply
+LIBR-0003,AndesNote Libro de matemática básica,Lectura,AndesNote,unidad,1 un,3584,4301,0.2,5,5,SI,20,10,Mayorista Escolar SpA
+LIBR-0004,Kuyen Cuaderno universitario 100 hojas,Cuadernos,Kuyen,paquete,100 hojas,840,1151,0.37,54,8,NO,33,3,Altovalle Supply
+LIBR-0005,Cordillera Art Cuadernillo caligrafía 1°,Lectura,Cordillera Art,unidad,1 un,6366,8212,0.29,45,2,NO,7,8,Papeles Pacífico
+LIBR-0006,Sur Cuaderno universitario 100 hojas,Cuadernos,Sur,paquete,100 hojas,1960,2587,0.32,8,7,NO,27,6,Ñamku Express
+LIBR-0007,Sur Libro de lectura infantil,Lectura,Sur,unidad,1 un,3929,5147,0.31,2,4,SI,18,11,Mercantil Litoral
+LIBR-0008,Aysén Libro de cuentos clásicos,Lectura,Aysén,unidad,1 un,11468,13303,0.16,2,2,SI,6,6,Mercantil Litoral
+LIBR-0009,AndesNote Cuaderno universitario 100 hojas,Cuadernos,AndesNote,paquete,100 hojas,1372,1893,0.38,13,8,NO,33,3,Ñamku Express
+LIBR-0010,Aysén Grapas N°10 1000 un,Organización,Aysén,unidad,1000 un,5793,7531,0.3,16,4,NO,14,8,Distribuidora Andina Ltda
+LIBR-0011,Cordillera Art Mouse óptico USB,Tecnología,Cordillera Art,unidad,1 un,5105,6228,0.22,20,2,NO,5,14,Comercial Cordillera
+LIBR-0012,AndesNote Corrector líquido 20 ml,Escritura,AndesNote,unidad,20 ml,704,943,0.34,71,5,NO,20,7,Librería Mayorista Kuyen
+LIBR-0013,Sur Pincel redondo N°4,Arte,Sur,unidad,1 un,1533,2208,0.44,53,5,NO,21,9,Mapal Logística
+LIBR-0014,Ñamku Marcador permanente negro,Escritura,Ñamku,unidad,1 un,1307,1804,0.38,23,3,NO,11,7,Mercantil Litoral
+LIBR-0015,Altovalle Fichas bibliográficas 100 un,Papelería,Altovalle,unidad,100 un,2825,3503,0.24,12,4,NO,17,5,Ñamku Express
+LIBR-0016,AndesNote Cartulina blanca tamaño oficio,Arte,AndesNote,unidad,1 un,4088,5355,0.31,39,2,NO,7,7,Aysén Distribuciones
+LIBR-0017,Litoral Sobres tamaño carta 10 un,Papelería,Litoral,unidad,10 un,1371,1645,0.2,35,2,NO,10,6,Mercantil Litoral
+LIBR-0018,Litoral Diccionario escolar,Lectura,Litoral,unidad,1 un,7642,10087,0.32,18,3,NO,12,12,Mapal Logística
+LIBR-0019,Pacífico Paper Set de resaltadores 4 colores,Escritura,Pacífico Paper,set,1 un,1406,2025,0.44,108,6,NO,26,5,Mapal Logística
+LIBR-0020,Kuyen Audífonos escolares,Tecnología,Kuyen,unidad,1 un,14971,17965,0.2,24,2,NO,9,12,Ñamku Express
+LIBR-0021,Litoral Mouse óptico USB,Tecnología,Litoral,unidad,1 un,4956,5699,0.15,22,2,NO,2,8,Librería Mayorista Kuyen
+LIBR-0022,Altovalle Separadores 12 pestañas,Organización,Altovalle,unidad,1 un,1344,1801,0.34,16,3,NO,12,7,Mayorista Escolar SpA
+LIBR-0023,Kuyen Libro de cuentos clásicos,Lectura,Kuyen,unidad,1 un,10420,13754,0.32,15,2,NO,5,9,Mayorista Escolar SpA
+LIBR-0024,Kuyen Marcador permanente negro,Escritura,Kuyen,unidad,1 un,1397,1760,0.26,31,13,NO,51,6,Mapal Logística
+LIBR-0025,Mapal Cuaderno universitario 100 hojas,Cuadernos,Mapal,paquete,100 hojas,2207,3024,0.37,13,10,NO,39,6,Mapal Logística
+LIBR-0026,Pacífico Paper Lápices de color 12 un,Arte,Pacífico Paper,unidad,12 un,518,715,0.38,51,2,NO,3,8,Mayorista Escolar SpA
+LIBR-0027,Mapal Témperas 6 colores,Arte,Mapal,unidad,1 un,904,1293,0.43,48,2,NO,8,8,Mayorista Escolar SpA
+LIBR-0028,Ñamku Cuaderno universitario 100 hojas,Cuadernos,Ñamku,paquete,100 hojas,2295,2800,0.22,47,3,NO,11,6,Ñamku Express
+LIBR-0029,AndesNote Libro de matemática básica,Lectura,AndesNote,unidad,1 un,8493,10786,0.27,34,4,NO,14,9,Aysén Distribuciones
+LIBR-0030,Aysén Libro de lectura infantil,Lectura,Aysén,unidad,1 un,4117,4899,0.19,14,2,NO,10,5,Papeles Pacífico
