@@ -768,8 +768,16 @@ function populateInventoryTable(data) {
         
         // Estilo según riesgo
         let riskColor = '#00f2fe'; // Cian (Estable)
-        if (item.risk > 75) riskColor = '#ff4d4d'; // Rojo (Crítico)
-        else if (item.risk > 40) riskColor = '#feca57'; // Amarillo (Preventivo)
+        let riskLevel = "low";
+        if (item.risk > 80) {
+            riskColor = '#ff4d4d'; // Rojo (Crítico)
+            riskLevel = "critical";
+        } else if (item.risk > 50) {
+            riskColor = '#feca57'; // Amarillo (Preventivo)
+            riskLevel = "medium";
+        }
+        
+        row.classList.add("sku-row", riskLevel);
 
         row.innerHTML = `
             <td><strong>${item.sku}</strong></td>
@@ -1016,11 +1024,13 @@ document.querySelectorAll(".risk-filter input").forEach(cb => {
 });
 
 function applyFilter() {
-    const checked = Array.from(document.querySelectorAll(".risk-filter input:checked"))
-        .map(cb => cb.value);
+    const checked = Array.from(
+        document.querySelectorAll(".risk-filter input:checked")
+    ).map(cb => cb.value);
 
     document.querySelectorAll(".sku-row").forEach(row => {
-        if (checked.includes(row.classList[1])) {
+
+        if (checked.length === 0 || checked.includes(row.classList[1])) {
             row.style.display = "";
         } else {
             row.style.display = "none";
@@ -1033,4 +1043,10 @@ function applyFilter() {
  */
 document.getElementById("explain-prediction").addEventListener("click", () => {
     document.getElementById("chat-container").classList.remove("hidden");
+});
+
+document.getElementById("explain-prediction").addEventListener("click", () => {
+    const box = document.getElementById("chatbot-proto-msg");
+    box.classList.remove("hidden");
+    box.innerText = "🔮 El módulo avanzado con LLM estará disponible próximamente en la versión Pro.";
 });

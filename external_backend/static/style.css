@@ -409,7 +409,7 @@ body.accessible-mode .ethics-content ul {
 
 
 /* =====================================
-   INTERFAZ DEL CHATBOT
+   INTERFAZ DEL CHATBOT PARA CÓDIGO 422
 ======================================== */
 .chat-box {
     border: 1px solid #222;
@@ -567,10 +567,43 @@ body.accessible-mode .chat-input-area button {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--border);
-    background: var(--text-dim);
+    background: rgba(255,255,255,0.03);
     min-height: 60px;
 }
 .def-term {
     cursor: pointer;
     text-decoration: underline dotted;
+}
+
+
+/* =====================================
+   INTERFAZ DEL CHATBOT PARA CÓDIGO 200
+======================================== */
+.chatbot-title {
+    margin-top: 40px;
+}
+
+/* Botón */
+.primary-btn {
+    background: #00f2fe;
+    color: #000;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.primary-btn:hover {
+    opacity: 0.85;
+}
+
+/* Caja simulada del chatbot Pro */
+.proto-box {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.3);
 }
