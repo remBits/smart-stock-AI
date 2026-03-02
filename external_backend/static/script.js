@@ -1030,11 +1030,29 @@ function applyFilter() {
 
     document.querySelectorAll(".sku-row").forEach(row => {
 
-        if (checked.length === 0 || checked.includes(row.classList[1])) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
+        const isCritical = row.classList.contains("critical");
+        const isMedium = row.classList.contains("medium");
+        const isLow = row.classList.contains("low");
+
+        let show = false;
+
+        if (checked.length === 0) {
+            show = true;
         }
+
+        if (checked.includes("critical") && isCritical) {
+            show = true;
+        }
+
+        if (checked.includes("medium") && isMedium) {
+            show = true;
+        }
+
+        if (checked.includes("low") && isLow) {
+            show = true;
+        }
+
+        row.style.display = show ? "" : "none";
     });
 }
 
