@@ -117,12 +117,6 @@
 
         <div id="inventory-view" class="tab-content hidden">
             <header class="top-header"><h1>Reporte de SKUs</h1></header>
-            <div class="definition-helper">
-                <p><strong>Centro de definiciones:</strong> Haz clic en un concepto para ver su explicación.</p>
-                <div id="definition-box" class="definition-box">
-                    <em>Aquí aparecerá la definición seleccionada.</em>
-                </div>
-            </div>
             <div id="inventory-explanation" class="explanation-box"></div>
             <section id="macro-dashboard" class="macro-panel hidden">
                 <div class="macro-grid">
@@ -147,10 +141,15 @@
                     <!-- <canvas id="macroChart"></canvas> -->
                 <!-- </div> -->
             </section>
+            <div class="risk-filter">
+                <label><input type="checkbox" value="critical" checked> Crítico</label>
+                <label><input type="checkbox" value="medium" checked> Medio</label>
+                <label><input type="checkbox" value="low" checked> Bajo</label>
+            </div>
             <div class="table-section">
                 <table>
                     <thead>
-                        <tr>
+                        <tr class="sku-row ${riskLevel}"></tr>
                             <th><span class="def-term" data-term="sku">SKU</span></th>
                             <th><span class="def-term" data-term="descripcion">Descripción</span></th>
                             <th><span class="def-term" data-term="rop">ROP</span></th>
@@ -162,7 +161,12 @@
                 </table>
             </div>
         </div>
-
+        <div class="definition-helper">
+            <p><strong>Centro de definiciones:</strong> Haz clic en un concepto para ver su explicación.</p>
+            <div id="definition-box" class="definition-box">
+                <em>Aquí aparecerá la definición seleccionada.</em>
+            </div>
+        </div>
         <div id="user-view" class="tab-content hidden">
 
             <div class="executive-box">

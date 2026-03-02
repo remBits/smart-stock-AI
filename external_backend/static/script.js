@@ -640,6 +640,10 @@ function updateGlobalMetrics(data) {
     El capital potencialmente optimizable asciende a $${totalSavings.toLocaleString('es-CL')}, lo que representa recursos que podrían gestionarse de manera más eficiente.
     
     En total se analizaron ${totalDemand} productos.
+
+    Para ver el estado específico de algún producto, haz click en el producto de interés. Podrás ver sus detalles en el Resumen Técnico del Panel.
+    
+    Para ver solamente los productos con un cierto nivel de riesgo, usa el filtro de la tabla.
     `;
 }
 
@@ -999,3 +1003,27 @@ document.addEventListener("click", function (e) {
         box.innerText = definitions[term] || "Definición no disponible.";
     }
 });
+
+/**
+ * PESTAÑA DE SKU: FILTRO DE RIESGO
+ */
+let riskLevel = "low";
+if (item.risk > 80) riskLevel = "critical";
+else if (item.risk > 50) riskLevel = "medium";
+
+document.querySelectorAll(".risk-filter input").forEach(cb => {
+    cb.addEventListener("change", applyFilter);
+});
+
+function applyFilter() {
+    const checked = Array.from(document.querySelectorAll(".risk-filter input:checked"))
+        .map(cb => cb.value);
+
+    document.querySelectorAll(".sku-row").forEach(row => {
+        if (checked.includes(row.classList[1])) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
